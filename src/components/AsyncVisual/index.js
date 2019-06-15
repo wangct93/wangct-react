@@ -1,6 +1,4 @@
 import React,{PureComponent} from 'react';
-import util from 'wangct-util';
-
 
 export default class AsyncVisual extends PureComponent {
   state = {};
@@ -15,24 +13,29 @@ export default class AsyncVisual extends PureComponent {
   }
 
   componentDidUpdate(prevProps){
-    this.checkScrollElem(prevProps);
+    this.updateScrollElem(prevProps);
   }
 
-  checkScrollElem(prevProps){
-    if(prevProps.scrollElem !== this.props.scrollElem){
+  updateScrollElem(prevProps){
+    const oldElem = this.getScrollElem(prevProps);
+    const elem = this.getScrollElem();
+    if(oldElem !== elem){
+      this.removeScrollEvent(oldElem);
       this.addScrollEvent();
     }
   }
 
-  addScrollEvent(){
-    const elem = this.getEventElem();
+  getScrollElem(props = this.props){
+    return props.scrollElem || window;
+  }
+
+  addScrollEvent(elem = this.getScrollElem()){
     if(elem && elem.addEventListener){
       elem.addEventListener('scroll',this.scrollEvent)
     }
   }
 
-  removeScrollEvent(){
-    const elem = this.getEventElem();
+  removeScrollEvent(elem = this.getScrollElem()){
     if(elem && elem.removeEventListener){
       elem.removeEventListener('scroll',this.scrollEvent)
     }
@@ -45,22 +48,26 @@ export default class AsyncVisual extends PureComponent {
     }
   };
 
-  getEventElem(){
-    return this.props.scrollElem || window;
+  loadComponent(){
+    this.removeScrollEvent();
+    Promise.resolve(this.props.content).then(content => {
+      this.setState({
+        content,
+        loaded:true
+      });
+    })
   }
 
-  loadComponent(){
-    this.removeScrollEvent()
-    const {content} = this.props;
-    this.setState({
-      content:util.isFunc(content) ? content() : content,
-      loaded:true
-    });
-  }
+  setElem = (ref) => {
+    this.container = ref;
+  };
 
   render() {
-    const {content,loaded} = this.state;
-    const {height} = this.props;
-    return loaded ? content || null : <div style={{height}} ref={ref => this.container = ref} />
+    const {props,state} = this;
+    return <React.Fragment>
+      {
+        state.loaded ? state.content : <div className={props.className} style={props.style} ref={this.setElem} />
+      }
+    </React.Fragment>
   }
 }

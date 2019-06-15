@@ -9,13 +9,13 @@ const cache = util.cache();
 
 export default class IconBox extends PureComponent {
 
-  getComponent() {
+  getIcon() {
     const {scriptUrl} = this.props;
     return scriptUrl ? getIconfont(scriptUrl) : Icon;
   }
 
   render() {
-    const Icon = this.getComponent();
+    const Icon = this.getIcon();
     return <Icon {...this.props} />
   }
 }
