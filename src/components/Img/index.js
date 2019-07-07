@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react';
 import util, {reactUtil} from 'wangct-util';
-import NormalSrc from '../assets/blank_img.png';
 
 const {getProps} = reactUtil;
 
@@ -11,9 +10,9 @@ const addToQueue = (function addToQueue(){
   const queue = util.queue({
     list,
     func(item,cb){
-      item.load(cb);
+      item.start(cb);
     },
-    limit:5
+    limit:5,
   });
   return function(item){
     if(!list.includes(item)){
@@ -28,7 +27,7 @@ const addToQueue = (function addToQueue(){
 export default class Img extends PureComponent {
   state = {
     alt:'图片加载失败',
-    viewSrc:NormalSrc
+    status:'wait'
   };
 
   componentDidMount() {
@@ -46,31 +45,9 @@ export default class Img extends PureComponent {
     }
   }
 
-  getProps(){
-    return getProps(this)
-  }
-
-  load(cb){
-    if(this.isUnmount){
-      cb();
-    }else{
-      this.loadFunc = cb;
-      const {src} = this.props;
-      const {viewSrc} = this.state;
-
-      if(src === viewSrc){
-        this.next();
-      }else{
-        this.setState({
-          viewSrc:src
-        })
-      }
-    }
-  }
-
   next(){
-    util.callFunc(this.loadFunc);
-    this.loadFunc = null;
+    util.callFunc(this.nextFunc);
+    this.nextFunc = null;
   }
 
   onLoad = () => {
@@ -78,13 +55,40 @@ export default class Img extends PureComponent {
   };
 
   onError = (e) => {
+    this.next();
     this.setState({
-      viewSrc:NormalSrc
+      status:'error'
     });
   };
 
-  render() {
+  start(cb){
+    if(this.isUnmount){
+      return cb();
+    }
+    this.nextFunc = cb;
     const props = getProps(this);
-    return <img {...props} src={props.viewSrc} onLoad={this.onLoad} onError={this.onError} />
+    if(props.src === props.normalSrc){
+      this.next();
+    }else{
+      this.setState({
+        status:'loading'
+      });
+    }
+  }
+
+  getSrc(){
+    const {status} = this.state;
+    const props = getProps(this);
+    if(status === 'wait'){
+      return props.normalSrc;
+    }else if(status === 'error'){
+      return props.errorSrc;
+    }else{
+      return props.src;
+    }
+  }
+
+  render() {
+    return <img {...getProps(this,['normalSrc','errorSrc','status'])} src={this.getSrc()} onLoad={this.onLoad} onError={this.onError} />
   }
 }

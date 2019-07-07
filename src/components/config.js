@@ -1,5 +1,5 @@
 
-export default {
+module.exports = {
   components:[
     'Auth',
     'Async',
@@ -11,4 +11,4 @@ export default {
     'AsyncVisual',
     'Img'
   ]
-}
+};

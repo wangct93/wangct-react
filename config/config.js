@@ -1,9 +1,4 @@
 
-const path = require('path');
-
-const resolve = (...paths) => path.resolve(process.cwd(),...paths);
-
-
 module.exports = {
   routes:[
     {
@@ -11,9 +6,5 @@ module.exports = {
       component:'Test'
     }
   ],
-  alias:{
-    '@lib':resolve('src/components'),
-    '@':resolve()
-  },
   disableCssModules:true
 };
