@@ -1,8 +1,6 @@
 import React, {PureComponent} from 'react';
-import {connect} from 'react-redux';
-import {Button,Icon} from 'antd';
+import {Icon} from 'antd';
 import util, {arrayUtil} from 'wangct-util';
-import $ from 'wangct-dom';
 import './index.less';
 
 

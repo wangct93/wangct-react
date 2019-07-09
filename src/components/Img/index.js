@@ -40,7 +40,11 @@ export default class Img extends PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if(this.state.src !== this.props.src){
+    this.checkSrc(prevProps);
+  }
+
+  checkSrc(prevProps){
+    if(prevProps.src !== this.props.src){
       addToQueue(this);
     }
   }

@@ -7,8 +7,7 @@ module.exports = {
     'Link',
     'Text',
     'Swiper',
-    // 'Comment',
-    'AsyncVisual',
+    'VisualAsync',
     'Img'
   ]
 };
