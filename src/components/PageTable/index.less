@@ -1,0 +1,30 @@
+:global{
+  .afc-table{
+    &.afc-table-fit{
+      height: 100%;
+      flex:1;
+      overflow: hidden;
+    }
+    .ant-pagination{
+      padding: 10px;
+      text-align: right;
+      border-top:1px solid #ddd;
+    }
+    table{
+      table-layout: fixed;
+    }
+
+    .selected{
+      background-color: #e6f7ff;
+    }
+  }
+}
+
+
+.pagin_single{
+  :global{
+    .ant-pagination-options-quick-jumper{
+      display: none;
+    }
+  }
+}

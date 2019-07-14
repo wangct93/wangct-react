@@ -5,6 +5,10 @@
 const Babel = require('wangct-babel');
 
 
+const watch = require('wangct-webpack/lib/watch');
+
+watch.once();
+
 const t = +new Date();
 new Babel({
   src:'src/components',
@@ -17,8 +21,8 @@ new Babel({
         allExtensions: true
       }],
       ['import', {
-        "libraryName": "antd",
-        "libraryDirectory": "es"
+        libraryName: "antd",
+        style:true
       }],
       '@babel/plugin-transform-runtime',
       ['@babel/plugin-proposal-decorators', {legacy: true}],

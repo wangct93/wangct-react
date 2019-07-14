@@ -3,9 +3,9 @@
  */
 import React, {PureComponent} from 'react';
 import {Icon} from 'antd';
-import util from 'wangct-util';
+import {cache as newCache} from 'wangct-util';
 
-const cache = util.cache();
+const cache = newCache();
 
 export default class IconBox extends PureComponent {
 

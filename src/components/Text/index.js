@@ -2,34 +2,60 @@
  * Created by wangct on 2019/1/19.
  */
 import React, {PureComponent} from 'react';
-import util,{reactUtil} from 'wangct-util';
 
 import Icon from '../Icon';
 
 import './index.less';
-
-const {getProps} = reactUtil;
+import {classNames, getProps, isDef, isString, toPromise, validateArray} from "wangct-util";
+import {getItemText, getItemValue} from "../common/util";
 
 export default class Text extends PureComponent {
 
+  state = {
+    options:[]
+  };
+
+  componentDidMount() {
+    this.loadData();
+  }
+
+  loadData(){
+    const {loadData} = this.props;
+    if(!loadData){
+      return;
+    }
+    toPromise(loadData).then(options => {
+      validateArray(options);
+      this.setState({
+        options
+      })
+    })
+  }
+
   getIconProps(){
     const {icon} = getProps(this);
-    return icon && (util.isString(icon) ? {type:icon} : icon);
+    return icon && (isString(icon) ? {type:icon} : icon);
   }
 
   getIcon(){
-    const {icon} = this.props;
-    return icon ? util.isString(icon) ? <Icon type={icon} /> : <Icon {...icon} /> : ''
+    const iconProps = this.getIconProps();
+    return iconProps && <Icon {...iconProps} />
   }
 
   getText(){
-    const {children,limit} = this.props;
-    return util.isDef(limit) ? substrText(children,limit) : children;
+    const {children,options = [],limit} = getProps(this);
+    const target = options.find(item => getItemValue(this,item) === children);
+    const viewText = target ? getItemText(this,item) : children;
+    return <span>
+      {
+        isDef(limit) ? substrText(viewText,limit) : viewText
+      }
+    </span>;
   }
 
   render() {
     const {props} = this;
-    return <span {...props} className={util.classNames('wct-text',props.className)}>
+    return <span {...props} className={classNames('wct-text',props.className)}>
       {this.getIcon()}
       {this.getText()}
     </span>

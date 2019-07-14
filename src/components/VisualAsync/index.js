@@ -1,5 +1,5 @@
 import React,{PureComponent} from 'react';
-import util from 'wangct-util';
+import {callFunc} from 'wangct-util';
 
 export default class VisualAsync extends PureComponent {
   state = {};
@@ -47,7 +47,7 @@ export default class VisualAsync extends PureComponent {
 
   onView(e){
     this.removeScrollEvent();
-    util.callFunc(this.props.onView,e);
+    callFunc(this.props.onView,e);
   }
 
   setElem = (ref) => {

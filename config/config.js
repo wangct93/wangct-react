@@ -6,5 +6,6 @@ module.exports = {
       component:'Test'
     }
   ],
+  port:8088,
   disableCssModules:true
 };

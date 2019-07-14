@@ -1,6 +1,6 @@
 {
   "name": "wangct-react",
-  "version": "1.0.11",
+  "version": "1.0.17",
   "description": "",
   "main": "lib/index.js",
   "files": [
@@ -13,20 +13,20 @@
     "publish": "npm publish --registry https://registry.npmjs.org/"
   },
   "dependencies": {
-    "history": "^4.9.0",
-    "react-redux": "^7.1.0",
-    "react-router-dom": "^5.0.1",
-    "redux": "^4.0.1",
+    "path-to-regexp": "^3.0.0",
     "wangct-dom": "^1.0.1",
-    "wangct-util": "^1.0.35"
+    "wangct-util": "^1.0.44"
   },
   "devDependencies": {
     "antd": "^3.20.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-redux": "^7.1.0",
+    "react-router-dom": "^5.0.1",
+    "redux": "^4.0.4",
     "wangct-babel": "^1.0.9",
     "wangct-mysql": "^1.0.8",
-    "wangct-server-util": "^1.0.31",
-    "wangct-webpack": "^1.0.8"
+    "wangct-server-util": "^1.0.33",
+    "wangct-webpack": "^1.0.12"
   }
 }

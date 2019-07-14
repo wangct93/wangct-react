@@ -1,13 +1,12 @@
 import React, {PureComponent} from 'react';
-import util, {reactUtil} from 'wangct-util';
+import {callFunc, getProps, queue} from 'wangct-util';
 
-const {getProps} = reactUtil;
 
 
 
 const addToQueue = (function addToQueue(){
   const list = [];
-  const queue = util.queue({
+  const q = queue({
     list,
     func(item,cb){
       item.start(cb);
@@ -17,7 +16,7 @@ const addToQueue = (function addToQueue(){
   return function(item){
     if(!list.includes(item)){
       list.push(item);
-      queue.start();
+      q.start();
     }
   }
 })();
@@ -50,7 +49,7 @@ export default class Img extends PureComponent {
   }
 
   next(){
-    util.callFunc(this.nextFunc);
+    callFunc(this.nextFunc);
     this.nextFunc = null;
   }
 
