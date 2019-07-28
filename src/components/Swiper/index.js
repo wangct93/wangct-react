@@ -1,73 +1,142 @@
 import React, {PureComponent} from 'react';
 import {Icon} from 'antd';
-import {classNames, toArray} from 'wangct-util';
+import {callFunc, classNames, getProps, toArray} from 'wangct-util';
 import './index.less';
 
 
-const interval = 300;
-
 export default class Swiper extends PureComponent {
   state = {
-    current:1,
-    animate:true
+    value:0,
+    animate:true,
+    interval:3000,
+    left:0,
+    duration:500
   };
 
   componentDidMount() {
-    this.move(1,true);
+    this.setInterval();
   }
 
-  toLeft = () => {
-    this.move(this.state.current - 1);
-  };
+  componentWillUnmount() {
+    this.clearInterval();
+  }
 
-  toRight = () => {
-    this.move(this.state.current + 1);
-  };
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    this.valueChange({...prevState,...prevProps});
+  }
 
-  move(current,isCheck){
-    const len = this.getContent().length;
-    current = (current + len) % len;
+  valueChange(prevProps){
+    const prevValue = this.getValue(prevProps);
+    const value = this.getValue();
+    if(prevValue === value){
+      return;
+    }
     this.setState({
-      current,
-      animate:!isCheck
+      endLeft:this.getLeft()
     },() => {
-      if(!isCheck){
-        setTimeout(() => {
-          this.check();
-        },interval);
-      }
+      this.startMove();
     })
   }
 
-  check(){
-    const {current} = this.state;
-    const len = this.getContent().length;
-    if(current === 0){
-      this.move(len - 2,true);
-    }else if(current === len - 1){
-      this.move(1,true);
-    }
+  startMove(){
+    this.stopMove();
+    const {duration} = getProps(this);
+    const {left,endLeft} = this.state;
+    const dl = (endLeft - left) / duration * 30;
+    this.durationTimer = setInterval(() => {
+      const {left,endLeft} = this.state;
+      let current = left + dl;
+      if(dl > 0 && current > endLeft || dl < 0 && current < endLeft){
+        this.stopMove();
+        current = endLeft;
+      }
+      this.setState({
+        left:current
+      });
+    },30);
   }
 
-  getLeft(){
-    const {current} = this.state;
-    const box = this.contentElem || {};
-    return -current * (box.offsetWidth || 0)
+  stopMove(){
+    clearInterval(this.durationTimer);
+  }
+
+  getValue(props = getProps(this)){
+    return props.value;
+  }
+
+  getLeft(value = this.getValue()){
+    return -value * this.contentElem.offsetWidth;
+  }
+
+  setInterval(){
+    this.clearInterval();
+    this.timer = setInterval(() => {
+      this.toRight();
+    },getProps(this).interval);
+  }
+
+  clearInterval(){
+    clearInterval(this.timer);
+  }
+
+  toLeft = () => {
+    let value = this.getValue();
+    if(value === 0){
+      const content = this.getContent();
+      this.setState({
+        left:this.getLeft(content.length - 1)
+      });
+      value = content.length - 2;
+    }else{
+      value--;
+    }
+    this.onChange(value);
+  };
+
+  toRight = () => {
+    let value = this.getValue();
+    const content = this.getContent();
+    if(value === content.length - 1){
+      value = 1;
+      this.setState({
+        left:0
+      });
+    }else{
+      value++;
+    }
+    this.onChange(value);
+  };
+
+  onChange(value){
+    this.setState({
+      value
+    });
+    callFunc(this.props.onChange,value);
   }
 
   getContent(){
     const children = toArray(this.props.children);
-    return [children[children.length - 1],...children,children[0]]
+    return [...children,children[0]];
   }
+
+  setElem = ref => {
+    this.contentElem = ref;
+  };
+
+  mouseEnter = () => {
+    this.clearInterval();
+  };
+
+  mouseLeave = () => {
+    this.setInterval();
+  };
 
   render() {
     const {state,props} = this;
-    return <div className={classNames('wct-swiper',props.className)} style={props.style}>
+    return <div onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} className={classNames('wct-swiper',props.className)} style={props.style}>
       <Icon type="left" onClick={this.toLeft} />
-      <div className="wct-swiper-content" ref={t => this.contentElem = t}>
-        <div className={classNames('wct-swiper-view',state.animate && 'wct-swiper-view-transition')} style={{left:this.getLeft() + 'px'}}>
-          {this.getContent()}
-        </div>
+      <div className="wct-swiper-view" ref={this.setElem}>
+        <div className="wct-swiper-content" style={{left:state.left}}>{this.getContent()}</div>
       </div>
       <Icon type="right" onClick={this.toRight} />
     </div>

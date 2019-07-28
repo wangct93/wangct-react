@@ -13,20 +13,21 @@
     "publish": "npm publish --registry https://registry.npmjs.org/"
   },
   "dependencies": {
+    "antd": "^3.20.7",
     "path-to-regexp": "^3.0.0",
-    "wangct-dom": "^1.0.1",
-    "wangct-util": "^1.0.44"
-  },
-  "devDependencies": {
-    "antd": "^3.20.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "redux": "^4.0.4",
-    "wangct-babel": "^1.0.9",
-    "wangct-mysql": "^1.0.8",
-    "wangct-server-util": "^1.0.33",
-    "wangct-webpack": "^1.0.12"
+    "wangct-dom": "^1.0.1",
+    "wangct-react-entry": "^1.0.2",
+    "wangct-util": "^1.0.49"
+  },
+  "devDependencies": {
+    "wangct-babel": "^1.0.11",
+    "wangct-mysql": "^1.0.9",
+    "wangct-server-util": "^1.0.36",
+    "wangct-webpack": "^1.0.16"
   }
 }

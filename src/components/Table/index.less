@@ -1,0 +1,16 @@
+@import "../style/base";
+
+.wct-table{
+  &.wct-table-fit{
+    height: 100%;
+    flex:1;
+    overflow: hidden;
+  }
+  table{
+    table-layout: fixed;
+  }
+
+  .selected{
+    background-color: @tableRowSelectColor;
+  }
+}

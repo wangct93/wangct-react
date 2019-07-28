@@ -4,41 +4,36 @@ import React, {PureComponent} from 'react';
 
 import css from './index.less';
 import {Checkbox,Form} from "antd";
-import {aryToObject, callFunc, classNames, getProps, isFunc, objectUtil} from 'wangct-util';
+import {aryToObject, callFunc, classNames, getProps, isDef, isFunc, isString, objectUtil, toNumber} from 'wangct-util';
 
 const ErrorFormItem = Form.Item;
 
-export default class FilterBox extends PureComponent {
+export default class QueryBox extends PureComponent {
   state = {
     value:{},
-    error:{}
-  }
-
-  onChange = (key,value) => {
-    const isMultiple = key === 'multiple';
-    value = isMultiple ? value : {[key]:value};
-    this.validator(value,null);
-    value = this.formatValue(value);
-    const formValue = {
-      ...this.getValue(),
-      ...value
-    };
-    this.setState({
-      value:formValue
-    });
-    callFunc(this.props.onChange,formValue,key,value);
-
-    const temp = aryToObject(this.getOptions(),'field');
-    Object.keys(value).forEach(key => {
-      const target = temp[key];
-      if(target){
-        callFunc(target.onChange,value[key],value,target);
-      }
-    })
+    error:{},
+    itemWidth:'33.33%'
   };
 
-  formatValue(value){
-    const options = this.getOptions();
+  onChange = (key,keyValue) => {
+    let extValue = key === 'multiple' ? keyValue : {[key]:keyValue};
+    const options = this.getOptions().filter(opt => isDef(extValue[opt.field]));
+    this.validate(options);
+    extValue = this.formatValue(extValue,options);
+    const value = {
+      ...this.getValue(),
+      ...extValue
+    };
+    this.setState({
+      value
+    });
+    callFunc(this.props.onChange,value,key,keyValue);
+    options.forEach(opt => {
+      callFunc(opt.onChange,value[opt.field],value);
+    });
+  };
+
+  formatValue(value,options){
     const values = this.getValue();
     return objectUtil.map(value,(value,key) => {
       const target = options.find(opt => opt.field === key);
@@ -55,64 +50,87 @@ export default class FilterBox extends PureComponent {
   }
 
   getCheckedField(item){
-    return item.field + '_checked';
+    const field = isString(item) ? item : item.field;
+    return field + '_checked';
   }
 
-  validator(value,cb){
+  getCheckedValue(){
+    const value = this.getValue();
+    const props = getProps(this);
+    const {options} = getProps(this);
+    const hasChecks = aryToObject(options,'field',({hasCheck = props.hasCheck}) => hasCheck);
+    return objectUtil.filter(value,(value,key,obj) => {
+      return (!hasChecks[key] || obj[this.getCheckedField(key)]) && value !== '';
+    });
+  }
+
+  async validate(options = this.getOptions()){
+    const value = objectUtil.filter(this.getCheckedValue(),(value,key) => {
+      return options.find(item => item.field === key);
+    });
     const {validable} = this.props;
     if(!validable){
-      return;
+      return value;
     }
-
-    let options = this.getOptions();
-    if(isFunc(value)){
-      cb = value;
-      value = this.getValue();
-    }else{
-      const fields = Object.keys(value);
-
-      options = options.filter((opt) => fields.includes(opt.field));
-    }
-    const extError = validatorOptions(options,value);
-    const error = objectUtil.filter({
-      ...this.state.error,
-      ...extError,
-    },value => !!value);
+    const error = validatorOptions(options,value);
     this.setState({
-      error
+      error:{
+        ...this.state.error,
+        ...error
+      }
     });
-    callFunc(cb,Object.keys(error).length ? error : null,value);
+    if(objectUtil.some(error,(value) => !!value)){
+      throw error;
+    }
+    return value;
+  }
+
+  getBtnWidth(){
+    const props = getProps(this);
+    const options = this.getOptions();
+    let prefixWidth = 0;
+    options.forEach(opt => {
+      const {width = props.itemWidth} = opt;
+      const widthNum = toNumber(width);
+      prefixWidth += widthNum;
+      if(prefixWidth > 100){
+        prefixWidth = widthNum;
+      }
+    });
+    const btnWidth = 100 - prefixWidth;
+    return btnWidth > 10 ? btnWidth + '%' : '100%';
   }
 
   render(){
     const value = this.getValue();
-    const {error} = this.state;
-    return <div className={classNames(this.props.validable && 'wct-query-validate','wct-query-box','wct-form-box')}>
+    const props = getProps(this);
+    const {error} = props;
+    return <div className={classNames(props.validable && 'wct-query-box-validate','wct-query-box','wct-form-box')}>
       {
         this.getOptions().map(item => {
-          const {field,component:Com,width = '50%',hasCheck = true,parent} = item;
-          let {props = {}} = item;
+          const {field,component:Com,width = props.itemWidth,hasCheck = props.hasCheck,parent} = item;
+          let {props:itemProps = {}} = item;
           const checkField = this.getCheckedField(item);
           const checked = hasCheck ? value[checkField] : true;
           if(parent){
-            props = {
-              ...props,
+            itemProps = {
+              ...itemProps,
               params:{
-                ...props.params,
+                ...itemProps.params,
                 parent:value[parent]
               }
             }
           }
-          return <FormItem error={error[field]} hasCheck={hasCheck} required={item.required} onChange={this.onChange.bind(this,checkField)} checked={checked} style={{width}} key={field} title={item.title}>
+          return <FormItem error={error[field]} hasCheck={hasCheck} required={item.required} onCheckChange={this.onChange.bind(this,checkField)} checked={checked} style={{width}} key={field} title={item.title}>
             {
-              <Com title={item.title} disabled={!checked} value={value[field]} onChange={this.onChange.bind(this,field)} {...props} />
+              <Com title={item.title} disabled={!checked} value={value[field]} onChange={this.onChange.bind(this,field)} {...itemProps} />
             }
           </FormItem>
         })
       }
-      {
-        this.props.btn
-      }
+      <div className="wct-query-btn-box" style={{width:this.getBtnWidth()}}>
+        {props.btn}
+      </div>
     </div>
   }
 }
@@ -120,16 +138,16 @@ export default class FilterBox extends PureComponent {
 class FormItem extends PureComponent {
 
   checkChange = (e) => {
-    callFunc(this.props.onChange,e.target.checked);
-  }
+    callFunc(this.props.onCheckChange,e.target.checked);
+  };
 
   getTitle(){
-    const {required,title} = this.props;
+    const {required,title} = getProps(this);
     return <span>
-      {title}
       {
         required ? <span style={{color:'red'}}>*</span> : ''
       }
+      <span>{title}：</span>
     </span>
   }
 
@@ -138,13 +156,13 @@ class FormItem extends PureComponent {
   }
 
   getHelp(){
-    const {props} = this;
+    const props = getProps(this);
     return !props.hasCheck || props.checked ? props.error : '';
   }
 
   render(){
-    const {props} = this;
-    return <div className="wct-form-item">
+    const props = getProps(this);
+    return <div className="wct-form-item" style={props.style}>
       <div className="wct-form-label">
         {
           props.hasCheck ? <Checkbox checked={props.checked} onChange={this.checkChange}>{this.getTitle()}</Checkbox> : this.getTitle()
@@ -160,9 +178,7 @@ class FormItem extends PureComponent {
 
 
 export function formValidator(validator,data){
-  return objectUtil.map(validator,(value,key) => {
-    return value && value(data[key],key,data)
-  });
+  return objectUtil.map(validator,(value,key) => callFunc(value,data[key],key,data));
 }
 
 export function validatorOptions(options,data){
@@ -171,7 +187,7 @@ export function validatorOptions(options,data){
     const {required} = opt;
     let {validator} = opt;
     if(required && !validator){
-      validator = (v) => v || v === 0 ? '' : `${opt.label}不能为空`;
+      validator = (v) => v || v === 0 ? '' : `${opt.title}不能为空`;
     }
     validators[opt.field] = validator;
   });

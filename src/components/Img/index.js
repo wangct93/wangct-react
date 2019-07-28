@@ -1,12 +1,12 @@
 import React, {PureComponent} from 'react';
-import {callFunc, getProps, queue} from 'wangct-util';
+import {callFunc, getProps, Queue} from 'wangct-util';
 
 
 
 
 const addToQueue = (function addToQueue(){
   const list = [];
-  const q = queue({
+  const q = new Queue({
     list,
     func(item,cb){
       item.start(cb);

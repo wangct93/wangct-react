@@ -1,19 +1,19 @@
+@import "../style/base";
 .wct-table-view{
-  height: 100%;
   display: flex;
   flex-direction: column;
 
-  &.wct-table-view-nofit{
-    height: auto;
-    :global{
-      .afc-table{
-        height: auto;
-      }
+  &.wct-table-view-fit{
+    height: 100%;
+    .wct-table{
+      height: 100%;
     }
   }
-  .btn-new-line{
-    .wct-filter-btn-box{
-      width: 100%;
-    }
+
+  .wct-table-view-content{
+    height: 100%;
+    flex:1;
+    overflow: hidden;
+    .flex-column();
   }
 }

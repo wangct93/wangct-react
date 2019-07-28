@@ -2,34 +2,31 @@
 .wct-swiper{
   display: flex;
   align-items: center;
-  :global{
-    > .anticon-left,
-    > .anticon-right{
-      font-size:22px;
-      color:#999;
-      cursor: pointer;
-    }
+
+  > .anticon-left,
+  > .anticon-right{
+    font-size:22px;
+    color:#999;
+    cursor: pointer;
   }
 }
 
-.wct-swiper-content{
+.wct-swiper-view{
   margin: 0 20px;
   overflow: hidden;
   flex:1;
   white-space: nowrap;
-  .wct-swiper-view{
-    position: relative;
-    left: 0;
-    top: 0;
-    > div,
-    > span{
-      display: inline-block;
-      vertical-align: middle;
-      width: 100%;
-      text-align: center;
-    }
-  }
-  .wct-swiper-view-transition{
-    transition:left .3s;
+}
+
+.wct-swiper-content{
+  position: relative;
+  left: 0;
+  top: 0;
+  > div,
+  > span{
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    text-align: center;
   }
 }
