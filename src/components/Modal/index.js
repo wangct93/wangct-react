@@ -13,12 +13,11 @@ export default class WctModal extends PureComponent {
     this.setState({
       confirmLoading:true
     });
-    const hideLoading = () => {
+    Promise.resolve(callFunc(this.props.onOk,...args)).finally(() => {
       this.setState({
         confirmLoading:false
       })
-    };
-    Promise.resolve(callFunc(this.props.onOk,...args)).then(hideLoading).catch(hideLoading);
+    });
   };
 
   render() {

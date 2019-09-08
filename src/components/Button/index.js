@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {Button} from 'antd';
-import { toPromise} from "wangct-util";
+import {getProps, toPromise} from "wangct-util";
 
 export default class WctButton extends PureComponent{
 
@@ -12,18 +12,14 @@ export default class WctButton extends PureComponent{
     this.setState({
       loading:true
     });
-    const hideLoading = () => {
+    toPromise(this.props.onClick,e).finally(() => {
       this.setState({
         loading:false
       });
-    };
-    toPromise(this.props.onClick,e).then(hideLoading).catch(hideLoading);
+    });
   };
 
-
-
   render() {
-    const {props} = this;
-    return <Button loading={this.state.loading} {...props} onClick={this.onClick} />
+    return <Button {...getProps(this)} onClick={this.onClick} />
   }
 }

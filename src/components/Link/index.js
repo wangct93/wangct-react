@@ -4,13 +4,17 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import PathToRegExp from 'path-to-regexp';
-import {classNames} from "wangct-util";
+import {classNames, getProps} from "wangct-util";
 
 export default @connect(({global}) => ({
   pathname:global.pathname,
   history:global.history
 }))
 class Link extends PureComponent {
+
+  state = {
+    activeName:'active'
+  };
 
   onClick = () => {
     const {props} = this;
@@ -22,9 +26,12 @@ class Link extends PureComponent {
     return PathToRegExp(to).test(pathname);
   }
 
+  getClassName(){
+    const props = getProps(this);
+    return classNames(props.className,this.isActive() && props.activeName);
+  }
+
   render() {
-    const {props} = this;
-    const {activeName = 'active'} = props;
-    return <a className={classNames(props.className,this.isActive() && activeName)} onClick={this.onClick}>{props.children}</a>
+    return <a className={this.getClassName()} onClick={this.onClick}>{this.props.children}</a>
   }
 }

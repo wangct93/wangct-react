@@ -5,11 +5,11 @@ import { Input} from 'antd';
 import {getProps,callFunc} from "wangct-util";
 
 
-
-export default class QueryInput extends PureComponent {
+export default class InputCap extends PureComponent {
 
   state = {
     placeholder: '请输入' + (this.props.title || ''),
+    allowClear:true
   };
 
   onChange = (e) => {
@@ -17,15 +17,16 @@ export default class QueryInput extends PureComponent {
   };
 
   formatValue(value){
-    const {formatter} = this.props;
-    return formatter ? formatter(value,this) : value;
+    const props = getProps(this);
+    const {formatter} = props;
+    return formatter ? formatter(value,props.value,this) : value;
   }
 
   getInputProps(){
-    return getProps(this,['filterFields','format','title']);
+    return getProps(this,['format','title']);
   }
 
   render(){
-    return <Input allowClear {...this.getInputProps()} onChange={this.onChange} />
+    return <Input {...this.getInputProps()} onChange={this.onChange} />
   }
 }

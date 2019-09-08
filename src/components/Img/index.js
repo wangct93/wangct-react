@@ -80,14 +80,14 @@ export default class Img extends PureComponent {
   }
 
   getSrc(){
-    const {status} = this.state;
     const props = getProps(this);
-    if(status === 'wait'){
-      return props.normalSrc;
-    }else if(status === 'error'){
-      return props.errorSrc;
-    }else{
-      return props.src;
+    switch (props.status) {
+      case 'wait':
+        return props.normalSrc;
+      case 'error':
+        return props.errorSrc;
+      default:
+        return props.src;
     }
   }
 

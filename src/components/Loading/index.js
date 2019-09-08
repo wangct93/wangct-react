@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {Spin} from 'antd';
 
-import css from './index.less';
+import './index.less';
 
 export default class WctLoading extends PureComponent {
 

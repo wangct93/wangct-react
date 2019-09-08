@@ -7,7 +7,7 @@ import {Cache} from 'wangct-util';
 
 const cache = new Cache();
 
-export default class IconBox extends PureComponent {
+export default class IconCap extends PureComponent {
 
   getIcon() {
     const {scriptUrl} = this.props;
