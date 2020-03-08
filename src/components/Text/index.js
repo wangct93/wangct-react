@@ -1,15 +1,17 @@
 /**
  * Created by wangct on 2019/1/19.
  */
-import React, {PureComponent} from 'react';
-
+import React from 'react';
 import Icon from '../Icon';
-
 import './index.less';
-import {classNames, getProps, isDef, isString, toPromise, validateArray} from "wangct-util";
+import {classNames, getProps, isDef, isString} from "wangct-util";
 import {getItemText, getItemValue} from "../common/util";
+import DefineComponent from "../DefineComponent";
 
-export default class Text extends PureComponent {
+/**
+ * 文本组件
+ */
+export default class Text extends DefineComponent {
 
   state = {
     options:[]
@@ -17,19 +19,6 @@ export default class Text extends PureComponent {
 
   componentDidMount() {
     this.loadData();
-  }
-
-  loadData(){
-    const {loadData} = this.props;
-    if(!loadData){
-      return;
-    }
-    toPromise(loadData).then(options => {
-      validateArray(options);
-      this.setState({
-        options
-      })
-    })
   }
 
   getIconProps(){
@@ -62,7 +51,12 @@ export default class Text extends PureComponent {
   }
 }
 
-
+/**
+ * 截取字符串
+ * @param str
+ * @param limit
+ * @returns {string}
+ */
 function substrText(str = '',limit = 100){
-  return limit >= str.length ? str : str.substr(0,limit) + '...'
+  return limit >= str.length ? str : str.substr(0,limit) + '...';
 }

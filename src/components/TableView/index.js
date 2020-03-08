@@ -7,11 +7,10 @@ import Pagination from '../Pagination';
 import {
   showLoading,
   getProps,
-  objectUtil,
   isString,
   isDef,
   callFunc,
-  isFunc, classNames, isObject, aryToObject, toPromise, proParse
+  isFunc, classNames, isObject, aryToObject, toPromise, proParse, objFind
 } from 'wangct-util';
 
 export default class TableView extends React.PureComponent{
@@ -90,7 +89,7 @@ export default class TableView extends React.PureComponent{
     }).catch(err => {
       const {validable} = getProps(this);
       if(!validable){
-        const target = objectUtil.find(err,value => !!value);
+        const target = objFind(err,value => !!value);
         message.info(target);
       }
     })

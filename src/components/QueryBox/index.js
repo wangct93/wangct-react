@@ -4,7 +4,18 @@ import React, {PureComponent} from 'react';
 
 import css from './index.less';
 import {Checkbox,Form} from "antd";
-import {aryToObject, callFunc, classNames, getProps, isDef, isFunc, isString, objectUtil, toNumber} from 'wangct-util';
+import {
+  aryToObject,
+  callFunc,
+  classNames,
+  getProps,
+  isDef,
+  isFunc,
+  isString,
+  objFilter, objMap,
+  objSome,
+  toNum
+} from 'wangct-util';
 
 const ErrorFormItem = Form.Item;
 
@@ -35,7 +46,7 @@ export default class QueryBox extends PureComponent {
 
   formatValue(value,options){
     const values = this.getValue();
-    return objectUtil.map(value,(value,key) => {
+    return objMap(value,(value,key) => {
       const target = options.find(opt => opt.field === key);
       return target && target.formatter ? target.formatter(value,values[key]) : value;
     })
@@ -59,13 +70,13 @@ export default class QueryBox extends PureComponent {
     const props = getProps(this);
     const {options} = getProps(this);
     const hasChecks = aryToObject(options,'field',({hasCheck = props.hasCheck}) => hasCheck);
-    return objectUtil.filter(value,(value,key,obj) => {
+    return objFilter(value,(value,key,obj) => {
       return (!hasChecks[key] || obj[this.getCheckedField(key)]) && value !== '';
     });
   }
 
   async validate(options = this.getOptions()){
-    const value = objectUtil.filter(this.getCheckedValue(),(value,key) => {
+    const value = objFilter(this.getCheckedValue(),(value,key) => {
       return options.find(item => item.field === key);
     });
     const {validable} = this.props;
@@ -79,7 +90,7 @@ export default class QueryBox extends PureComponent {
         ...error
       }
     });
-    if(objectUtil.some(error,(value) => !!value)){
+    if(objSome(error,(value) => !!value)){
       throw error;
     }
     return value;
@@ -91,7 +102,7 @@ export default class QueryBox extends PureComponent {
     let prefixWidth = 0;
     options.forEach(opt => {
       const {width = props.itemWidth} = opt;
-      const widthNum = toNumber(width);
+      const widthNum = toNum(width);
       prefixWidth += widthNum;
       if(prefixWidth > 100){
         prefixWidth = widthNum;
@@ -178,7 +189,7 @@ class FormItem extends PureComponent {
 
 
 export function formValidator(validator,data){
-  return objectUtil.map(validator,(value,key) => callFunc(value,data[key],key,data));
+  return objMap(validator,(value,key) => callFunc(value,data[key],key,data));
 }
 
 export function validatorOptions(options,data){

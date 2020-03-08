@@ -2,7 +2,7 @@ import React, {PureComponent} from "react";
 import {Form} from 'antd';
 import WctText from '../Text';
 import './index.less';
-import {objectUtil, getProps, callFunc, classNames, aryToObject} from "wangct-util";
+import {getProps, callFunc, classNames, aryToObject, objMap, objFilter} from "wangct-util";
 
 const ErrorFormItem = Form.Item;
 
@@ -55,7 +55,7 @@ export default class WctForm extends PureComponent {
   formatValue(value,oldValue){
     const options = this.getOptions();
     const temp = aryToObject(options,'field',item => item);
-    return objectUtil.map(value,(value,key) => {
+    return objMap(value,(value,key) => {
       const target = temp[key];
       return target && target.formatter ? target.formatter(value,oldValue[key]) : value;
     })
@@ -71,7 +71,7 @@ export default class WctForm extends PureComponent {
       value = this.getValue();
     }
     const extError = validatorOptions(options,value);
-    const error = objectUtil.filter({
+    const error = objFilter({
       ...this.state.error,
       ...extError,
     },value => !!value);
@@ -132,7 +132,7 @@ export class FormItem extends PureComponent{
 
 
 export function formValidator(validators,data){
-  return objectUtil.map(validators,(value,key) => {
+  return objMap(validators,(value,key) => {
     return value && value(data[key],key,data)
   });
 }

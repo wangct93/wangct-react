@@ -7,6 +7,7 @@ import {random} from "wangct-util";
 import {Button } from "antd";
 import {Swiper,Table} from "../../components";
 import TableView from "../../components/TableView";
+import Loading from "../../components/Loading";
 
 
 export default class Test extends PureComponent{
@@ -75,7 +76,8 @@ export default class Test extends PureComponent{
   render(){
     const {state} = this;
     return <div className="container">
-      <TableView
+      <Loading title={"wd"} loading />
+      {/*<TableView
         filterOptions={state.options}
         columns={state.columns}
         dataSource={state.tableData}
@@ -83,7 +85,7 @@ export default class Test extends PureComponent{
       />
       <div>
         <Button onClick={this.resize}>刷新</Button>
-      </div>
+      </div>*/}
     </div>
   }
 }

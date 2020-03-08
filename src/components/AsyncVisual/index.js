@@ -1,6 +1,9 @@
 import React,{PureComponent} from 'react';
 import {callFunc, getProps} from 'wangct-util';
 
+/**
+ * 异步视图（展示在界面时加载内容）
+ */
 export default class AsyncVisual extends PureComponent {
   state = {
     useWin:true
