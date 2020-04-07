@@ -1,21 +1,16 @@
+@import "../style/base";
 
+.wct-tabs{
 
-.container{
-  height:100%;
-
-  :global{
-    .ant-tabs{
-      flex:1;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-    .ant-tabs-top-bar{
-      margin-bottom: 0;
-    }
+  &.wct-tabs-fit-height{
+    .flex-parent-column();
     .ant-tabs-content{
-      flex:1;
-      height: 0;
+      .flex-child-column();
     }
   }
+
+  .ant-tabs-top-bar{
+    margin-bottom: 0;
+  }
+
 }

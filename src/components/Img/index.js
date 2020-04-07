@@ -1,32 +1,51 @@
 import React, {PureComponent} from 'react';
-import {callFunc, getProps, Queue} from 'wangct-util';
+import {aryRemove, callFunc, getProps, Queue} from 'wangct-util';
 
+const list = [];
+const imgMap = new Map();
+const queue = new Queue({
+  list,
+  func(item){
+    return new Promise((cb) => {
+      item.start(() => {
+        imgMap.delete(item);
+        cb();
+      });
+    });
+  },
+  limit:5,
+});
 
-
-
-const addToQueue = (function addToQueue(){
-  const list = [];
-  const q = new Queue({
-    list,
-    func(item,cb){
-      item.start(cb);
-    },
-    limit:5,
-  });
-  return function(item){
-    if(!list.includes(item)){
-      list.push(item);
-      q.start();
-    }
+/**
+ * 添加对象到队列
+ * @param item
+ */
+function addToQueue(item){
+  if(!imgMap.get(this)){
+    imgMap.set(item,true);
+    list.push(item);
+    queue.start();
   }
-})();
+}
 
+/**
+ * 从队列删除对象
+ * @param item
+ */
+function removeToQueue(item){
+  item.next();
+  aryRemove(list,item);
+  imgMap.delete(item);
+}
 
-
+/**
+ * 图片组件
+ */
 export default class Img extends PureComponent {
   state = {
     alt:'图片加载失败',
-    status:'wait'
+    status:'wait',
+    src:this.props.normalSrc,
   };
 
   componentDidMount() {
@@ -34,16 +53,16 @@ export default class Img extends PureComponent {
   }
 
   componentWillUnmount() {
-    this.isUnmount = true;
-    this.next();
+    removeToQueue(this);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    this.checkSrc(prevProps);
+    this.checkSrc(prevProps,prevState);
   }
 
   checkSrc(prevProps){
     if(prevProps.src !== this.props.src){
+      removeToQueue(this);
       addToQueue(this);
     }
   }
@@ -57,41 +76,34 @@ export default class Img extends PureComponent {
     this.next();
   };
 
-  onError = (e) => {
-    this.next();
-    this.setState({
-      status:'error'
-    });
-  };
-
-  start(cb){
-    if(this.isUnmount){
-      return cb();
-    }
-    this.nextFunc = cb;
-    const props = getProps(this);
-    if(props.src === props.normalSrc){
+  onError = () => {
+    const {errorSrc} = this.props;
+    if(!errorSrc || errorSrc === this.state.src){
       this.next();
     }else{
       this.setState({
-        status:'loading'
+        src:this.props.errorSrc,
       });
     }
+  };
+
+  start(cb){
+    this.nextFunc = cb;
+    this.setState({
+      src:this.props.src,
+    });
   }
 
   getSrc(){
-    const props = getProps(this);
-    switch (props.status) {
-      case 'wait':
-        return props.normalSrc;
-      case 'error':
-        return props.errorSrc;
-      default:
-        return props.src;
-    }
+    return this.state.src;
   }
 
   render() {
-    return <img {...getProps(this,['normalSrc','errorSrc','status'])} src={this.getSrc()} onLoad={this.onLoad} onError={this.onError} />
+    return <img
+      {...getProps(this,['normalSrc','errorSrc'])}
+      src={this.getSrc()}
+      onLoad={this.onLoad}
+      onError={this.onError}
+    />
   }
 }

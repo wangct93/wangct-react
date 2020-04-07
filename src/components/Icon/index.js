@@ -20,6 +20,11 @@ export default class IconCap extends PureComponent {
   }
 }
 
+/**
+ * 获取iconfont
+ * @param scriptUrl
+ * @returns {DOMPoint | SVGNumber | string | SVGTransform | SVGLength | SVGPathSeg | any}
+ */
 function getIconfont(scriptUrl){
   let Iconfont = cache.getItem(scriptUrl);
   if(!Iconfont){

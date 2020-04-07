@@ -3,89 +3,59 @@ import React, {PureComponent} from 'react';
 import {Form,Upload,Img,Icon,Text,Input} from '@lib';
 
 import './index.less';
-import {random} from "wangct-util";
+import {random,loop} from "wangct-util";
 import {Button } from "antd";
-import {Swiper,Table} from "../../components";
+import {DefineComponent, Swiper, Table} from "../../components";
 import TableView from "../../components/TableView";
 import Loading from "../../components/Loading";
+import {Portal} from '@lib';
 
 
-export default class Test extends PureComponent{
+export default class Test extends DefineComponent{
 
   state = {
-    options:[
-      {
-        title:'标题',
-        field:'name',
-        component:Input,
-        required:true
-      },
-      {
-        title:'封面',
-        field:'cover',
-        component:Upload,
-      },
-      {
-        title:'封面',
-        field:'cove222222r',
-        component:Upload,
-      },
-      {
-        title:'封面',
-        field:'cove2222222r',
-        component:Upload,
-      },
-      {
-        title:'封面',
-        field:'cov2e2222222r',
-        component:Upload,
-      },
-    ],
-    list:[],
-    columns:[
-      {
-        title:'名称',
-        dataIndex:'name'
-      },
-      {
-        title:'年龄',
-        dataIndex:'age'
-      },
-      {
-        title:'成就',
-        dataIndex:'a22ge',
-        noWidth:true
-      }
-    ],
-    tableData:[
-      {
-        name:'王垂通是sdsssssssssssssssssssssssssssssssssssssssssssssssssssssssss'
-      },
-      {
-        name:'2王垂通是sdsssssssssssssssssssssssssssssssssssssssssssssssssssssssss'
-      }
-    ]
   };
 
-  resize = () => {
+  doTest = () => {
     this.setState({
-      tableData:[...this.state.tableData]
+      _date:+new Date(),
     })
   }
 
+  setElem = (elem) => {
+    console.log(2222222);
+    if(elem){
+      window.a = elem;
+    }
+  }
+
   render(){
-    const {state} = this;
-    return <div className="container">
-      <Loading title={"wd"} loading />
-      {/*<TableView
-        filterOptions={state.options}
-        columns={state.columns}
-        dataSource={state.tableData}
-        validable
-      />
-      <div>
-        <Button onClick={this.resize}>刷新</Button>
-      </div>*/}
+    console.log(12);
+    return <div onClick={this.doTest}>
+      {
+        this.state._date || <Test1 ref={this.setElem} />
+      }
+
+      {
+        new Array(10).fill(true).map((index) => {
+          return <Img width={50} src="https://fuss10.elemecdn.com/0/77/64237a0feace7b5d73841c825f2f0png.png?imageMogr/format/webp/thumbnail/!130x130r/gravity/Center/crop/130x130/" key={index + random()} />
+        })
+      }
+      <div style={{}}>
+        {
+          new Array(10).fill(true).map((index) => {
+            return <Img width={50} src="https://fuss10.elemecdn.com/0/77/64237a0feace7b5d73841c825f2f0png.png?imageMogr/format/webp/thumbnail/!130x130r/gravity/Center/crop/130x130/" key={index + random()} />
+          })
+        }
+      </div>
+    </div>;
+  }
+}
+
+class Test1 extends DefineComponent {
+  render() {
+    return <div>
+11
     </div>
   }
 }

@@ -1,5 +1,5 @@
 import {PureComponent} from "react";
-import {getProps, toAry, toPromise, validateArray} from "wangct-util";
+import {toAry, toPromise} from "wangct-util";
 
 /**
  * 自定义组件
@@ -17,15 +17,15 @@ export default class DefineComponent extends PureComponent {
   }
 
   getOptions(){
-    return toAry(getProps(this).options);
+    return toAry(this.getProp('options'));
   }
 
   getValue(){
-    return getProps(this).value;
+    return this.getProp('value');
   }
 
   loadOptions(){
-    const {loadOptions} = getProps(this);
+    const loadOptions = this.getProp('loadOptions');
     if(!loadOptions){
       return;
     }
@@ -37,23 +37,27 @@ export default class DefineComponent extends PureComponent {
   }
 
   loadData(){
-    const {loadData} = this.props;
+    const loadData = this.getProp('loadData');
     if(!loadData){
       return;
     }
     toPromise(loadData).then(data => {
       this.setState({
         data
-      })
+      });
     })
   }
 
+  getData(){
+    return this.getProp('data');
+  }
+
   getTextField(){
-    return getProps(this).textField || 'text';
+    return this.getProp('textField') || 'text';
   }
 
   getValueField(){
-    return getProps(this).valueField || 'value';
+    return this.getProp('valueField') || 'value';
   }
 
   getItemValue(item){
@@ -62,6 +66,14 @@ export default class DefineComponent extends PureComponent {
 
   getItemText(item){
     return item && item[this.getTextField()];
+  }
+
+  setElem = (elem) => {
+    this.elem = elem;
+  };
+
+  getElem(){
+    return this.elem;
   }
 
   setTarget = (target) => {
@@ -78,6 +90,24 @@ export default class DefineComponent extends PureComponent {
 
   getSubTarget(){
     return this.refSubTarget;
+  }
+
+  getProps(filterKeys = []){
+    const props = {
+      ...this.state,
+      ...this.props,
+    };
+    toAry(filterKeys).forEach((key) => {
+      delete props[key];
+    });
+    return props;
+  }
+
+  getProp(key){
+    if(key in this.props){
+      return this.props[key];
+    }
+    return this.state && this.state[key];
   }
 
 }
