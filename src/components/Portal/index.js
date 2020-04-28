@@ -14,6 +14,17 @@ export default class PortalMod extends DefineComponent {
     this.createElem();
   }
 
+  componentWillUnmount() {
+    this.removeElem();
+  }
+
+  removeElem(){
+    const {container} = this;
+    if(container){
+      document.body.removeChild(container);
+    }
+  }
+
   createElem(){
     const container = document.createElement('div');
     const {className,style} = this.props;

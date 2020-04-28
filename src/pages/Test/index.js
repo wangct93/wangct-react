@@ -31,24 +31,38 @@ export default class Test extends DefineComponent{
 
   render(){
     console.log(12);
-    return <div onClick={this.doTest}>
+    return <Table columns={[
       {
-        this.state._date || <Test1 ref={this.setElem} />
-      }
-
+        title: 'Name',
+        dataIndex: 'name',
+        render: (text, row, index) => {
+          if (index < 1) {
+            return <a>{text}</a>;
+          }
+          return {
+            children: <a>{text}</a>,
+            props: {
+              colSpan: 2,
+            },
+          };
+        },
+      },
       {
-        new Array(10).fill(true).map((index) => {
-          return <Img width={50} src="https://fuss10.elemecdn.com/0/77/64237a0feace7b5d73841c825f2f0png.png?imageMogr/format/webp/thumbnail/!130x130r/gravity/Center/crop/130x130/" key={index + random()} />
-        })
-      }
-      <div style={{}}>
-        {
-          new Array(10).fill(true).map((index) => {
-            return <Img width={50} src="https://fuss10.elemecdn.com/0/77/64237a0feace7b5d73841c825f2f0png.png?imageMogr/format/webp/thumbnail/!130x130r/gravity/Center/crop/130x130/" key={index + random()} />
-          })
-        }
-      </div>
-    </div>;
+        title: '22',
+        dataIndex: 'tel',
+        render: (text, row, index) => {
+          if (index < 1) {
+            return <a>{text}</a>;
+          }
+          return {
+            children: <a>{text}</a>,
+            props: {
+              colSpan: 0,
+            },
+          };
+        },
+      },
+    ]} dataSource={[{name:'w',tel:'dd'},{name:'wf',tel:'dd2'}]} />;
   }
 }
 
