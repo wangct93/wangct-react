@@ -1,82 +1,49 @@
 import React, {PureComponent} from "react";
-import {Form} from 'antd';
-import WctText from '../Text';
 import './index.less';
 import {getProps, callFunc, classNames, aryToObject, objMap, objFilter} from "wangct-util";
+import DefineComponent from "../DefineComponent";
+import {toAry} from "@wangct/util/lib/arrayUtil";
+import {toStr} from "@wangct/util/lib/stringUtil";
 
-const ErrorFormItem = Form.Item;
-
-export default class WctForm extends PureComponent {
+/**
+ * 表单
+ */
+export default class Form extends DefineComponent {
   state = {
     options:[],
     error:{},
     value:this.props.defaultValue
   };
 
-  getOptions(){
-    return getProps(this).options || []
-  }
-
   getValue(){
-    return getProps(this).value || {}
+    return this.getProp('value') || {};
   }
 
-  clear(){
-    this.setState({
-      value:{},
-      error:{}
-    })
-  }
-
-  onChange(value,...args){
-    this.setState({
-      value
-    });
-    callFunc(this.props.onChange,value,...args);
-  }
-
-  onFieldChange = (field,value,...args) => {
-    const extValue = field === 'multiple' ? value : {[field]:value};
+  onFieldChange = (opt,fieldValue) => {
     const oldValue = this.getValue();
-    const formatValue = this.formatValue(extValue,oldValue);
-    const formValue = {
-      ...oldValue,
-      ...formatValue
-    };
-    this.validator(extValue);
-
-    const target = this.getOptions().find(opt => opt.field === field);
-    if(target){
-      callFunc(target.onChange,value,...args);
+    const {formatter,field} = opt;
+    if(formatter){
+      fieldValue = formatter(fieldValue,oldValue[field]);
     }
-    this.onChange(formValue,field,value,...args);
+    const value = {
+      ...oldValue,
+      [field]:fieldValue,
+    };
+    this.validator(value);
+    this.onChange(value);
   };
-
-  formatValue(value,oldValue){
-    const options = this.getOptions();
-    const temp = aryToObject(options,'field',item => item);
-    return objMap(value,(value,key) => {
-      const target = temp[key];
-      return target && target.formatter ? target.formatter(value,oldValue[key]) : value;
-    })
-  }
 
   validator(value){
     let options = this.getOptions();
     if(value){
-      const fields = Object.keys(value);
-
-      options = options.filter((opt) => fields.includes(opt.field));
+      options = options.filter((opt) => opt.field in value);
     }else{
       value = this.getValue();
     }
     const extError = validatorOptions(options,value);
-    const error = objFilter({
-      ...this.state.error,
-      ...extError,
-    },value => !!value);
+    const error = objFilter({...this.state.error, ...extError,},value => !!value);
     this.setState({
-      error
+      error,
     });
     return Object.keys(error).length ? Promise.reject(error) : Promise.resolve(value);
   }
@@ -84,71 +51,82 @@ export default class WctForm extends PureComponent {
   render(){
     const value = this.getValue();
     const props = getProps(this);
-    return <div className={classNames('wct-form-box',props.className)} style={props.style}>
+    return <div className={classNames('w-form',props.className)} style={props.style}>
       {
         this.getOptions().map(opt => {
-          const {field,readonly = props.readonly} = opt;
+          const {field,readOnly = props.readOnly,component:Com = 'div'} = opt;
           const {title} = opt;
-          const Com = readonly ? Text : opt.component;
           return <FormItem required={opt.required} title={title} key={field} error={this.state.error[field]}>
-            <Com title={title} value={value[field]} onChange={this.onFieldChange.bind(this,field)} {...opt.props} />
+            <Com disabled={readOnly} title={title} value={value[field]} onChange={this.onFieldChange.bind(this,opt)} {...opt.props} />
           </FormItem>
         })
       }
-    </div>
+    </div>;
   }
 }
 
-class Text extends PureComponent {
-  render() {
-    const {props} = this;
-    return <WctText {...props}>{props.value}</WctText>
-  }
-}
-
-
-
+/**
+ * 表单单项
+ */
 export class FormItem extends PureComponent{
-
-  getValidateStatus(){
-    return this.props.error ? 'error' : 'success';
-  }
 
   render(){
     const {props} = this;
-    return <div className="wct-form-line">
-      <div className="wct-form-label">
+    return <div className="w-form-line">
+      <div className="w-form-label">
         {
           props.required && <span style={{color:'red'}}>*</span>
         }
         <span>{props.title}{props.sep === false ? '' : props.sep || '：'}</span>
       </div>
-      <div className="wct-form-value">
-        <ErrorFormItem validateStatus={this.getValidateStatus()} help={props.error}>{props.children}</ErrorFormItem>
+      <div className="w-form-value">
+        {props.children}
       </div>
     </div>
   }
 }
 
 
-export function formValidator(validators,data){
+export function validatorOptions(options,data){
+  const validators = aryToObject(options,'field',(opt) => {
+    const {required,needRequiredValidator = true,component} = opt;
+    const validatorAry = [opt.validator];
+    if(required && needRequiredValidator){
+      validatorAry.unshift((v) => {
+        if(v === '' || toAry(v).length === 0){
+          return opt.title + '不能为空';
+        }
+      });
+    }
+    if(component && component.validator){
+      validatorAry.push(component.validator);
+    }
+    return (...args) => {
+      return aryFindResult(validatorAry,(validFunc) => validFunc && validFunc(...args));
+    };
+  });
+  const optTemp = aryToObject(options,'field');
   return objMap(validators,(value,key) => {
-    return value && value(data[key],key,data)
+    const msg = value && value(data[key],key,data);
+    if(!msg){
+      return;
+    }
+    const target = optTemp[key];
+    const title = target && target.title;
+    return target.errorSkipTitle || toStr(msg).startsWith(title) ? msg : title + msg;
   });
 }
 
-export function validatorOptions(options,data){
-  const validators = getValidators(options);
-  return formValidator(validators,data);
-}
-
-function getValidators(options = []){
-  return aryToObject(options,'field',(opt) => {
-    const {required} = opt;
-    let {validator} = opt;
-    if(required && !validator){
-      validator = (v) => v || v === 0 ? '' : `${opt.title}不能为空`;
-    }
-    return validator;
-  })
+/**
+ * 获取数组中结果为true的一项，并返回结果
+ * @param ary
+ * @param func
+ */
+export function aryFindResult(ary,func){
+  let result = null;
+  toAry(ary).find((item,index) => {
+    result = callFunc(func,item,index,ary);
+    return !!result;
+  });
+  return result;
 }

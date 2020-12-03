@@ -6,70 +6,65 @@ import './index.less';
 import {random,loop} from "wangct-util";
 import {Button } from "antd";
 import {DefineComponent, Swiper, Table} from "../../components";
-import TableView from "../../components/TableView";
-import Loading from "../../components/Loading";
-import {Portal} from '@lib';
+import {TableSearch} from "../../components/Table";
+import {aryToObject} from "@wangct/util/lib/arrayUtil";
 
 
 export default class Test extends DefineComponent{
 
   state = {
-  };
-
-  doTest = () => {
-    this.setState({
-      _date:+new Date(),
-    })
-  }
-
-  setElem = (elem) => {
-    console.log(2222222);
-    if(elem){
-      window.a = elem;
-    }
-  }
-
-  render(){
-    console.log(12);
-    return <Table columns={[
+    columns:[
       {
         title: 'Name',
-        dataIndex: 'name',
-        render: (text, row, index) => {
-          if (index < 1) {
-            return <a>{text}</a>;
-          }
-          return {
-            children: <a>{text}</a>,
-            props: {
-              colSpan: 2,
-            },
-          };
-        },
+        field: 'name',
       },
       {
         title: '22',
-        dataIndex: 'tel',
-        render: (text, row, index) => {
-          if (index < 1) {
-            return <a>{text}</a>;
-          }
-          return {
-            children: <a>{text}</a>,
-            props: {
-              colSpan: 0,
-            },
-          };
-        },
+        field: 'tel',
       },
-    ]} dataSource={[{name:'w',tel:'dd'},{name:'wf',tel:'dd2'}]} />;
+    ],
+    filterOptions:[
+      {
+        title:'输入框',
+        field:'wad',
+        component:Input,
+      }
+    ]
+  };
+
+  render(){
+    return <TableSearch
+      columns={this.state.columns}
+      filterOptions={this.state.filterOptions}
+      loadData={getTestLoadData(this.state.columns,50)}
+      fit
+    />;
   }
 }
 
-class Test1 extends DefineComponent {
-  render() {
-    return <div>
-11
-    </div>
-  }
+/**
+ * 获取测试表格数据
+ * @author wangchuitong
+ */
+export function getTestLoadData(columns,length = 30){
+  const data = new Array(length).fill(true).map(() => {
+    return aryToObject(columns,'field',(col) => {
+      if(col.range){
+        return col.range[Math.floor(Math.random() * col.range.length)];
+      }
+      return col.title;
+    });
+  });
+  return async ({page_num,page_size}) => {
+    await new Promise((cb) => {
+      setTimeout(() => {
+        cb();
+      },0);
+    });
+    const content = page_size ? data.slice((page_num - 1) * page_size,page_num * page_size) : data;
+    return {
+      list:content,
+      total:length,
+    };
+  };
 }

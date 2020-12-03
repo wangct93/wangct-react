@@ -1,11 +1,15 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import {Button} from 'antd';
 import {getProps, toPromise} from "wangct-util";
+import DefineComponent from "../DefineComponent";
 
-export default class WctButton extends PureComponent{
+/**
+ * 按钮
+ */
+export default class Btn extends DefineComponent{
 
   state = {
-    loading:false
+    loading:false,
   };
 
   onClick = (e) => {
@@ -20,6 +24,6 @@ export default class WctButton extends PureComponent{
   };
 
   render() {
-    return <Button {...getProps(this)} onClick={this.onClick} />
+    return <Button {...getProps(this)} onClick={this.onClick} />;
   }
 }
