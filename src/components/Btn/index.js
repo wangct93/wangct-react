@@ -1,7 +1,9 @@
 import React from 'react';
-import {Button} from 'antd';
-import {getProps, toPromise} from "wangct-util";
+import {getProps, toPromise} from "@wangct/util";
 import DefineComponent from "../DefineComponent";
+import Auth from "../Auth";
+import {isObj, isStr} from "@wangct/util/lib/typeUtil";
+import {AntButton} from "../utils/baseCom";
 
 /**
  * 按钮
@@ -23,7 +25,22 @@ export default class Btn extends DefineComponent{
     });
   };
 
+  getAuth(){
+    const auth = this.getProp('auth');
+    if(isStr(auth)){
+      return {
+        and:auth,
+      };
+    }
+    if(isObj(auth)){
+      return auth;
+    }
+    return {};
+  }
+
   render() {
-    return <Button {...getProps(this)} onClick={this.onClick} />;
+    return <Auth {...this.getAuth()}>
+      <AntButton {...getProps(this)} auth={null} onClick={this.onClick} />
+    </Auth>;
   }
 }

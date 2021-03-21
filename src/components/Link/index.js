@@ -3,27 +3,36 @@
  */
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import PathToRegExp from 'path-to-regexp';
-import {classNames, getProps} from "wangct-util";
+import {classNames, getProps} from "@wangct/util";
+import {getFrameState, getPathname, pathMatch, pathTo} from "../../frame";
+import DefineComponent from "../DefineComponent";
 
-export default @connect(({global}) => ({
-  pathname:global.pathname,
-  history:global.history
+/**
+ * 路由跳转组件
+ */
+@connect(({}) => ({
+  pathname:getPathname(),
 }))
-class Link extends PureComponent {
+export default class Link extends DefineComponent {
 
   state = {
-    activeName:'active'
+    activeName:'active',
   };
 
   onClick = () => {
-    const {props} = this;
-    props.history.push(props.to)
+    if(this.isDisabled()){
+      return;
+    }
+    pathTo(this.getPath());
   };
 
+  getPath(){
+    const {to,path = to} = this.props;
+    return path;
+  }
+
   isActive(){
-    const {to,pathname} = this.props;
-    return PathToRegExp(to).test(pathname);
+    return pathMatch(this.getPath(),this.props.pathname);
   }
 
   getClassName(){

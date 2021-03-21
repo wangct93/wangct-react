@@ -1,7 +1,7 @@
 import React from 'react';
-import css from './index.less';
 import {classNames} from "@wangct/util/lib/util";
 import DefineComponent from "../DefineComponent";
+import {getDivProps} from "../utils/utils";
 
 /**
  * 布局元素
@@ -10,13 +10,12 @@ import DefineComponent from "../DefineComponent";
 export default class Flex extends DefineComponent {
 
   state = {
-    options:[]
-  };
 
+  };
 
   render() {
     const {props} = this;
-    return <div className={classNames(css.flex,props.className,props.column && css.flex_column)} style={props.style}>{props.children}</div>;
+    return <div {...getDivProps(props)} className={classNames('w-flex',props.className,props.column && 'w-flex-column',props.verticalCenter && 'w-flex-vertical-center',props.center && 'w-flex-center',props.wrap && 'w-flex-wrap')}>{props.children}</div>;
   }
 }
 
@@ -29,7 +28,7 @@ export class FlexItem extends DefineComponent {
 
   render() {
     const {props} = this;
-    return <div className={classNames(css.flex_item,props.className)} style={props.style}>{props.children}</div>;
+    return <div {...getDivProps(props)} className={classNames('w-flex-item',props.className)}>{props.children}</div>;
   }
 }
 

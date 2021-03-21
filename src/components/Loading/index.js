@@ -1,9 +1,9 @@
-import React, {PureComponent} from 'react';
-import {Spin} from 'antd';
+import React from 'react';
 
 import './index.less';
 import DefineComponent from "../DefineComponent";
-import {classNames, getProps} from "wangct-util";
+import {classNames, getProps} from "@wangct/util";
+import {AntSpin} from "../utils/baseCom";
 
 /**
  * 加载中组件
@@ -11,14 +11,18 @@ import {classNames, getProps} from "wangct-util";
 export default class Loading extends DefineComponent {
 
   state = {
-    isFixed:true
+    global:true,
   };
 
+  isGlobal(){
+    return this.getProp('global');
+  }
+
   render() {
-    const {loading,title,isFixed} = getProps(this);
-    return loading ? <div className={classNames('wct-loading-wrap',isFixed && 'wct-loading-wrap-fixed')}>
+    const {props} = this;
+    return props.loading ? <div className={classNames('wct-loading',this.isGlobal() && 'wct-loading-global')}>
       <div className="wct-loading-content">
-        <Spin size="large" spinning tip={title} />
+        <AntSpin size="large" spinning tip={props.title} />
       </div>
     </div> : null
   }

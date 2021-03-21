@@ -1,16 +1,30 @@
 @import "../../styles/common";
 
-.flex{
+.w-flex{
   .flex_parent();
+  align-content: flex-start;
 
-  &.flex_column{
+  &.w-flex-column{
     .flex_parent_column();
-    .flex_item{
+    & > .w-flex-item{
       .flex_child_column();
     }
   }
 
-  .flex_item{
+  & > .w-flex-item{
     .flex_child();
+  }
+
+  &.w-flex-center{
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.w-flex-vertical-center{
+    align-items: center;
+  }
+
+  &.w-flex-wrap{
+    flex-wrap: wrap;
   }
 }

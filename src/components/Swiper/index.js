@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
-import {Icon} from 'antd';
-import {callFunc, classNames, getProps, toArray} from 'wangct-util';
+import {callFunc, classNames, getProps, toArray} from '@wangct/util';
 import './index.less';
+import Icon from "../Icon";
 
 
 export default class Swiper extends PureComponent {
@@ -139,6 +139,6 @@ export default class Swiper extends PureComponent {
         <div className="wct-swiper-content" style={{left:state.left}}>{this.getContent()}</div>
       </div>
       <Icon type="right" onClick={this.toRight} />
-    </div>
+    </div>;
   }
 }

@@ -1,98 +1,177 @@
 
-import React, {PureComponent} from 'react';
-import {  Select} from 'antd';
+import React from 'react';
+import {toPromise, equal, getProps} from "@wangct/util";
+import DefineComponent from "../DefineComponent";
+import {toAry} from "@wangct/util/lib/arrayUtil";
+import {toStr} from "@wangct/util/lib/stringUtil";
+import {isUndef} from "@wangct/util/lib/typeUtil";
+import {classNames} from "@wangct/util/lib/util";
+import {getText, getValue} from "../utils/utils";
+import {AntSelect,AntTreeSelect} from "../utils/baseCom";
+import Icon from "../Icon";
 
-import {toPromise, validateArray, equal, getProps, callFunc, toArray} from "wangct-util";
-import {getItemText, getItemValue} from "../common/util";
 
-export class QuerySelect extends PureComponent {
+/**
+ * 下拉框
+ */
+export default class Select extends DefineComponent {
   state = {
-    options:[],
-    allowClear:true,
+    options: [],
+    allowClear: true,
     placeholder:'请选择' + (this.props.title || ''),
-    value:this.props.defaultValue,
-    loadEndDefaultSelected:true
   };
 
   componentDidMount() {
-    this.loadData();
+    this.initValue();
+    this.loadOptions();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState, snapshot) {
     this.checkParams(prevProps);
   }
 
-  checkParams(prevProps){
-    if(!equal(this.getParams(),this.getParams(prevProps)) || this.props.loadData !== prevProps.loadData){
-      this.loadData();
+  checkParams(prevProps) {
+    if (!equal(this.getParams(), this.getParams(prevProps)) || this.props.loadData !== prevProps.loadData) {
+      this.loadOptions();
     }
   }
 
-  getParams(props = this.props){
-    return props.params
+  getParams(props = this.props) {
+    return props.params;
   }
 
-  loadData(){
-    const {loadData} = this.props;
-    if(!loadData){
-      return;
-    }
-    toPromise(loadData,this.getParams()).then((data) => {
-      validateArray(data);
-      const {valueField} = getProps(this);
-      data = data.map(item => {
-        return {
-          ...item,
-          [valueField]:getItemValue(this,item) + ''
-        }
-      });
+  loadOptions() {
+    const params = this.getParams();
+    toPromise(this.props.loadData,params).then((options) => {
+      options = toAry(options).map((opt) => ({
+        ...opt,
+        value:toStr(opt.value),
+      }));
       this.setState({
-        options:data
+        options,
       });
-      const props = getProps(this);
-      if(props.loadEndDefaultSelected){
-        this.onChange(getItemValue(this,data[0]))
+      if(!this.getValue() && this.getProp('initValue') && options.length){
+        const data = options[0];
+        const key = data.value;
+        if(this.isMultiple()){
+          this.onChange([key],[data]);
+        }else{
+          this.onChange(key,data);
+        }
       }
     });
   }
 
-  isMultiple(){
+  getValue() {
+    const value = this.getProp('value');
+    if (isUndef(value)) {
+      return undefined;
+    }
+    if (this.isMultiple()) {
+      return toAry(value).map((item) => toStr(item));
+    }
+    return toStr(value);
+  }
+
+  isMultiple() {
     return this.props.mode === 'multiple';
   }
 
-  onChange = (key,opt) => {
-    key = this.isMultiple() ? toArray(key) : key;
-    opt = this.isMultiple() ? toArray(opt) : opt;
-    callFunc(this.props.onChange,key,opt);
-    this.setState({
-      value:key
-    })
-  };
-
-  getOptions(){
-    return getProps(this).options || [];
+  filterOption(input, option) {
+    return option.props.children.toLowerCase().includes(input.toLowerCase());
   }
 
-  formatText(text,item){
-    const {textFormatter} = getProps(this);
-    return textFormatter ? textFormatter(text,item) : text;
+  getFilterOption() {
+    return this.props.showSearch ? this.filterOption : undefined;
   }
 
-  getSelectProps(){
-    return getProps(this,['title','loadData','textField','valueField','loadEndDefaultSelected'])
+  getPlaceholder() {
+    return this.props.disabled ? '' : this.getProp('placeholder');
   }
 
-  render(){
-    return <Select
-      {...this.getSelectProps()}
+  render() {
+    return <AntSelect
+      filterOption={this.getFilterOption()}
+      placeholder={this.getPlaceholder()}
+      {...this.props}
+      value={this.getValue()}
       onChange={this.onChange}
+      className={classNames('w-select',this.props.className)}
+      ref={this.setTarget}
     >
       {
-        this.getOptions().map(item => {
-
-          return <Select.Option data={item} key={getItemValue(this,item)}>{this.formatText(getItemText(this,item),item)}</Select.Option>
+        this.getOptions().map((item) => {
+          const value = getValue(this,item);
+          if(value == null){
+            return null;
+          }
+          return <AntSelect.Option text={item.text} data={item} key={item.value}>{getText(this, item)}</AntSelect.Option>;
         })
       }
-    </Select>
+    </AntSelect>;
   }
+}
+
+/**
+ * 下拉树选择
+ */
+export class TreeSelect extends DefineComponent {
+  state = {
+    childrenField: 'children',
+    textField: 'text',
+    valueField: 'value',
+    showSearch:true,
+    allowClear:true,
+    suffixIcon:<Icon type="caret-down"/>,
+    treeDefaultExpandAll:true,
+    filterTreeNode,
+    placeholder:'请选择上级菜单',
+  };
+
+  componentDidMount() {
+    this.initOptions();
+  }
+
+  initOptions(){
+    toPromise(this.props.loadData).then((options) => {
+      this.setState({
+        options:toAry(options),
+      });
+    });
+  }
+
+  getTreeNodes(list) {
+    const textField = this.getProp('textField');
+    const valueField = this.getProp('valueField');
+    const childrenField = this.getProp('childrenField');
+    const textFormatter = this.getProp('textFormatter');
+    const valueFormatter = this.getProp('valueFormatter');
+    return toAry(list).map((item) => {
+      if(!item){
+        return null;
+      }
+      const text = textFormatter ? textFormatter(item[textField],item) : item[textField];
+      const value = valueFormatter ? valueFormatter(item[valueField],item) : item[valueField];
+      return <AntTreeSelect.TreeNode title={text} key={value} value={value}>
+        {this.getTreeNodes(item[childrenField])}
+      </AntTreeSelect.TreeNode>;
+    })
+  }
+
+  render() {
+    return <AntdTreeSelect
+      {...getProps(this)}
+    >
+      {
+        this.getTreeNodes(this.getOptions())
+      }
+    </AntdTreeSelect>;
+  }
+}
+
+/**
+ * 过滤树节点
+ */
+function filterTreeNode(str,node){
+  return node.props.title.indexOf(str) > -1;
 }

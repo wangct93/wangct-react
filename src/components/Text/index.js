@@ -3,10 +3,10 @@
  */
 import React from 'react';
 import Icon from '../Icon';
-import './index.less';
-import {classNames, getProps, isDef, isString} from "wangct-util";
-import {getItemText, getItemValue} from "../common/util";
+import {classNames, getProps, isDef, isString,toAry} from "@wangct/util";
 import DefineComponent from "../DefineComponent";
+import {getText} from "../utils/utils";
+import {toPromise} from "@wangct/util/lib/promiseUtil";
 
 /**
  * 文本组件
@@ -14,11 +14,19 @@ import DefineComponent from "../DefineComponent";
 export default class Text extends DefineComponent {
 
   state = {
-    options:[]
+    options:[],
   };
 
   componentDidMount() {
-    this.loadData();
+    this.initOptions();
+  }
+
+  initOptions(){
+    toPromise(this.props.loadData).then((options) => {
+      this.setState({
+        options:toAry(options),
+      });
+    });
   }
 
   getIconProps(){
@@ -33,8 +41,8 @@ export default class Text extends DefineComponent {
 
   getText(){
     const {children,options = [],limit} = getProps(this);
-    const target = options.find(item => getItemValue(this,item) === children);
-    const viewText = target ? getItemText(this,item) : children;
+    const target = options.find(item => getText(this,item) === children);
+    const viewText = target ? getText(this,item) : children;
     return <span>
       {
         isDef(limit) ? substrText(viewText,limit) : viewText

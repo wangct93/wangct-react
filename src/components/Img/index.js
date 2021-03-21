@@ -1,47 +1,13 @@
-import React, {PureComponent} from 'react';
-import {aryRemove, callFunc, getProps, Queue} from 'wangct-util';
+import React from 'react';
+import {aryRemove, callFunc, getProps, Queue} from '@wangct/util';
+import DefineComponent from "../DefineComponent";
 
-const list = [];
-const imgMap = new Map();
-const queue = new Queue({
-  list,
-  func(item){
-    return new Promise((cb) => {
-      item.start(() => {
-        imgMap.delete(item);
-        cb();
-      });
-    });
-  },
-  limit:5,
-});
-
-/**
- * 添加对象到队列
- * @param item
- */
-function addToQueue(item){
-  if(!imgMap.get(this)){
-    imgMap.set(item,true);
-    list.push(item);
-    queue.start();
-  }
-}
-
-/**
- * 从队列删除对象
- * @param item
- */
-function removeToQueue(item){
-  item.next();
-  aryRemove(list,item);
-  imgMap.delete(item);
-}
+const {addToQueue,removeToQueue} = getImgQueueObj();
 
 /**
  * 图片组件
  */
-export default class Img extends PureComponent {
+export default class Img extends DefineComponent {
   state = {
     alt:'图片加载失败',
     status:'wait',
@@ -49,61 +15,94 @@ export default class Img extends PureComponent {
   };
 
   componentDidMount() {
-    addToQueue(this);
+    this.addQueue();
   }
 
   componentWillUnmount() {
-    removeToQueue(this);
+    this.removeQueue();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    this.checkSrc(prevProps,prevState);
+    this.checkProp(prevProps,'src',this.addQueue);
   }
 
-  checkSrc(prevProps){
-    if(prevProps.src !== this.props.src){
-      removeToQueue(this);
-      addToQueue(this);
-    }
-  }
-
-  next(){
-    callFunc(this.nextFunc);
-    this.nextFunc = null;
-  }
-
-  onLoad = () => {
-    this.next();
-  };
-
-  onError = () => {
-    const {errorSrc} = this.props;
-    if(!errorSrc || errorSrc === this.state.src){
-      this.next();
-    }else{
+  loadImg(){
+    return new Promise((cb) => {
+      if(!this.props.src){
+        cb();
+        return;
+      }
       this.setState({
-        src:this.props.errorSrc,
+        src:this.props.src,
       });
-    }
-  };
-
-  start(cb){
-    this.nextFunc = cb;
-    this.setState({
-      src:this.props.src,
+      this.loadEnd = cb;
     });
   }
 
-  getSrc(){
-    return this.state.src;
+  addQueue(){
+    addToQueue(this);
   }
 
+  removeQueue(){
+    callFunc(this.loadEnd);
+    removeToQueue(this);
+  }
+
+  onLoad = () => {
+    callFunc(this.loadEnd);
+  };
+
+  onError = () => {
+    callFunc(this.loadEnd);
+  };
+
   render() {
+    // return <img {...this.props} alt="2" />;
     return <img
       {...getProps(this,['normalSrc','errorSrc'])}
-      src={this.getSrc()}
+      src={this.state.src}
       onLoad={this.onLoad}
       onError={this.onError}
     />
   }
+}
+
+/**
+ * 获取图片队列
+ * @returns {Promise<any>|{addToQueue: addToQueue, removeToQueue: removeToQueue}}
+ */
+function getImgQueueObj(){
+  const list = [];
+  const map = new Map();
+  const queue = new Queue({
+    data:list,
+    func(item){
+      return item.loadImg();
+    },
+    limit:5,
+  });
+
+  /**
+   * 添加对象到队列
+   * @param item
+   */
+  function addToQueue(item){
+    removeToQueue(item);
+    list.push(item);
+    queue.start();
+  }
+
+  /**
+   * 从队列删除对象
+   * @param item
+   */
+  function removeToQueue(item){
+    aryRemove(list,item);
+    map.delete(item);
+  }
+
+  return {
+    addToQueue,
+    removeToQueue,
+  };
 }

@@ -1,13 +1,15 @@
 
-import React, {PureComponent} from 'react';
-import {Radio} from 'antd';
-import {toPromise, callFunc, equal, validateArray, getProps} from "wangct-util";
-import {getItemText, getItemValue} from "../common/util";
+import React from 'react';
+import {toPromise, callFunc, equal, validateArray, getProps} from "@wangct/util";
+import DefineComponent from "../DefineComponent";
+import {getText, getValue} from "../utils/utils";
+import {AntRadio} from '../utils/baseCom';
 
 
-const RadioGroup = Radio.Group;
-
-export default class QueryRadio extends PureComponent {
+/**
+ * 单选框
+ */
+export default class Radio extends DefineComponent {
 
   state = {
     value:this.props.defaultValue,
@@ -46,36 +48,25 @@ export default class QueryRadio extends PureComponent {
       });
       const props = getProps(this);
       if(props.loadEndDefaultSelected){
-        this.onChange({target:{value:getItemValue(this,data[0])}})
+        this.onChange(getValue(this,data[0]));
       }
     })
   }
 
-  onChange = (e) => {
+  onRadioChange = (e) => {
     const {value} = e.target;
-    this.setState({
-      value
-    });
-    callFunc(this.props.onChange,value);
+    this.onChange(value);
   };
 
-  getOptions(){
-    return getProps(this).options || []
-  }
-
-  getGroupProps(){
-    return getProps(this,['options','loadData','textField','valueField','loadEndDefaultSelected']);
-  }
-
   render(){
-    return <RadioGroup {...this.getGroupProps()} onChange={this.onChange}>
+    return <AntRadio.Group {...this.props} options={undefined} onChange={this.onRadioChange}>
       {
         this.getOptions().map(opt => {
-          const value = getItemValue(this,opt);
-          const text = getItemText(this,opt);
-          return <Radio value={value} key={value}>{text}</Radio>
+          const value = getValue(this,opt);
+          const text = getText(this,opt);
+          return <AntRadio value={value} key={value}>{text}</AntRadio>
         })
       }
-    </RadioGroup>
+    </AntRadio.Group>
   }
 }

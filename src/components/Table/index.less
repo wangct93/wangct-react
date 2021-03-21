@@ -1,8 +1,9 @@
 @import "../../styles/common";
 
-@tableHeaderBgColor:#fafafa;
+@tableHeaderBgColor:#eee;
+@trHoverBgColor:#fafafa;
 .w-table{
-
+  position: relative;
 }
 
 .w-table-header{
@@ -15,18 +16,31 @@
   }
 }
 
+.w-table-body{
+  .w-table-tr{
+    &:nth-child(even),
+    &:hover{
+      background-color: @trHoverBgColor;
+    }
+  }
+}
+
 .w-table-tr{
   .flex_parent();
 }
 
 .w-table-td{
   .flex_child();
-  padding: 10px;
+  padding: 0 10px;
+  min-height: 40px;
+  .flex_parent();
+  align-items: center;
 }
 
 .w-table-fit{
   .flex_parent_column();
   overflow: hidden;
+  min-height: 200px;
 
   .w-table-body{
     .flex_child_column();
@@ -34,11 +48,7 @@
   }
 }
 
-.w-table-scroll{
-  .w-table-header{
-    padding-right: @scrollbarWidth;
-  }
-}
+
 
 .w-table-search{
   & > .w-header{
@@ -63,5 +73,81 @@
     & > .w-body{
       .flex_child_column();
     }
+  }
+}
+
+.w-table-form{
+
+}
+
+.w-table-fixed{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+
+  .w-table-fixed-left,
+  .w-table-fixed-right{
+    left: 0;
+    top: 0;
+    position: absolute;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: auto;
+    .flex_parent_column();
+    background-color: #fff;
+    box-shadow: 6px 0 6px -4px rgba(0,0,0,0.15);
+  }
+
+  .w-table-fixed-right{
+    left: auto;
+    right: 0;
+    box-shadow: -6px 0 6px -4px rgba(0,0,0,0.15);
+  }
+
+  .w-table-body{
+    overflow: hidden;
+  }
+}
+
+.w-table-scroll-y{
+  .w-table-header{
+    padding-right: @scrollbarWidth;
+  }
+
+  .w-table-fixed{
+    .w-table-header{
+      padding-right: 0;
+    }
+  }
+
+  .w-table-fixed-right{
+    right: @scrollbarWidth;
+  }
+}
+
+.w-table-scroll-x{
+  .w-table-fixed{
+    padding-bottom: @scrollbarWidth;
+  }
+  .w-table-fixed-left,
+  .w-table-fixed-right{
+    height:calc(100% - @scrollbarWidth);
+  }
+}
+
+.w-table-fixed-scroll-left-min{
+  .w-table-fixed-left{
+    box-shadow: none;
+  }
+}
+
+
+
+.w-table-fixed-scroll-left-max{
+  .w-table-fixed-right{
+    box-shadow: none;
   }
 }

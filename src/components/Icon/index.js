@@ -1,22 +1,32 @@
 /**
  * Created by wangct on 2019/3/9.
  */
-import React, {PureComponent} from 'react';
-import {Icon} from 'antd';
-import {Cache} from 'wangct-util';
+import React from 'react';
+import {setCache,getCache} from '@wangct/util';
+import DefineComponent from "../DefineComponent";
+import {getIconScriptUrl} from "../utils/utils";
+import {AntIcon} from "../utils/baseCom";
 
-const cache = new Cache();
 
-export default class IconCap extends PureComponent {
+/**
+ * 图标
+ */
+export default class Icon extends DefineComponent {
 
   getIcon() {
-    const {scriptUrl} = this.props;
-    return scriptUrl ? getIconfont(scriptUrl) : Icon;
+    return this.isIconfont() ? getIconfont(this.props.scriptUrl) : AntIcon;
+  }
+
+  isIconfont(){
+    return this.props.iconfontType != null;
   }
 
   render() {
-    const Icon = this.getIcon();
-    return <Icon {...this.props} />
+    const Com = this.getIcon();
+    const {props} = this;
+    const comProps = {...props};
+    delete comProps.iconfontType;
+    return <Com {...comProps} type={this.isIconfont() ? props.iconfontType : props.type} />;
   }
 }
 
@@ -25,13 +35,13 @@ export default class IconCap extends PureComponent {
  * @param scriptUrl
  * @returns {DOMPoint | SVGNumber | string | SVGTransform | SVGLength | SVGPathSeg | any}
  */
-function getIconfont(scriptUrl){
-  let Iconfont = cache.getItem(scriptUrl);
+function getIconfont(scriptUrl = getIconScriptUrl()){
+  let Iconfont = getCache(scriptUrl);
   if(!Iconfont){
-    Iconfont = Icon.createFromIconfontCN({
-      scriptUrl
+    Iconfont = AntIcon.createFromIconfontCN({
+      scriptUrl,
     });
-    cache.setItem(scriptUrl,Iconfont);
+    setCache(scriptUrl,Iconfont);
   }
   return Iconfont;
 }
