@@ -1,18 +1,6 @@
-const {resolve} = require('wangct-server-util');
+const {resolve} = require('@wangct/node-util');
 
 module.exports = {
-  routes:[
-    {
-      path:'/',
-      component:'Layout',
-      children:[
-        {
-          path:'/',
-          component:'Test',
-        }
-      ]
-    }
-  ],
   port:8088,
   disableCssModules:true,
   alisa:{

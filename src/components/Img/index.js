@@ -1,6 +1,7 @@
 import React from 'react';
-import {aryRemove, callFunc, getProps, Queue} from '@wangct/util';
-import DefineComponent from "../DefineComponent";
+import {aryRemove, callFunc, Queue} from '@wangct/util';
+import DefineComponent from "../frame/components/DefineComponent";
+import BlankImg from '../assets/images/img_blank.jpg';
 
 const {addToQueue,removeToQueue} = getImgQueueObj();
 
@@ -11,19 +12,22 @@ export default class Img extends DefineComponent {
   state = {
     alt:'图片加载失败',
     status:'wait',
-    src:this.props.normalSrc,
+    src:this.props.normalSrc || BlankImg,
   };
 
   componentDidMount() {
-    this.addQueue();
+    addToQueue(this);
   }
 
   componentWillUnmount() {
-    this.removeQueue();
+    callFunc(this.loadEnd);
+    removeToQueue(this);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    this.checkProp(prevProps,'src',this.addQueue);
+    this.checkProp(prevProps,'src',() => {
+      addToQueue(this);
+    });
   }
 
   loadImg(){
@@ -34,32 +38,28 @@ export default class Img extends DefineComponent {
       }
       this.setState({
         src:this.props.src,
+        status:'loading',
       });
       this.loadEnd = cb;
     });
   }
 
-  addQueue(){
-    addToQueue(this);
-  }
-
-  removeQueue(){
-    callFunc(this.loadEnd);
-    removeToQueue(this);
-  }
-
   onLoad = () => {
-    callFunc(this.loadEnd);
+    if(this.state.status === 'loading'){
+      this.setState({
+        status:'finish',
+      });
+      callFunc(this.loadEnd);
+    }
   };
 
   onError = () => {
-    callFunc(this.loadEnd);
+    this.onLoad();
   };
 
   render() {
-    // return <img {...this.props} alt="2" />;
     return <img
-      {...getProps(this,['normalSrc','errorSrc'])}
+      {...this.getProps(['normalSrc'])}
       src={this.state.src}
       onLoad={this.onLoad}
       onError={this.onError}

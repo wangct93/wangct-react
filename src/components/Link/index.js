@@ -1,11 +1,11 @@
 /**
  * Created by wangct on 2019/1/19.
  */
-import React, {PureComponent} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {classNames, getProps} from "@wangct/util";
-import {getFrameState, getPathname, pathMatch, pathTo} from "../../frame";
-import DefineComponent from "../DefineComponent";
+import {getPathname, pathMatch, pathTo} from "../frame";
+import DefineComponent from "../frame/components/DefineComponent";
 
 /**
  * 路由跳转组件

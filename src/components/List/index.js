@@ -1,10 +1,10 @@
 import React from 'react';
 import  {classNames, getProps, toPromise} from '@wangct/util';
-import DefineComponent from "../../frame/components/DefineComponent";
-import AsyncVisual from "../../@lib/AsyncVisual";
 import {toAry} from "@wangct/util/lib/arrayUtil";
 import {toStr} from "@wangct/util/lib/stringUtil";
 import Btn from "../Btn";
+import DefineComponent from "../frame/components/DefineComponent";
+import AsyncVisual from "../AsyncVisual";
 
 /**
  * 列表加载项

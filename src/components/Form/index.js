@@ -1,6 +1,6 @@
 import React, {PureComponent} from "react";
 import {getProps, callFunc, classNames, aryToObject, objMap, objFilter} from "@wangct/util";
-import DefineComponent from "../DefineComponent";
+import DefineComponent from "../frame/components/DefineComponent";
 import {toAry} from "@wangct/util/lib/arrayUtil";
 import {toStr} from "@wangct/util/lib/stringUtil";
 import {isStr} from "@wangct/util/lib/typeUtil";

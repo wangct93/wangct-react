@@ -1,6 +1,6 @@
 import React from 'react';
 import {callFunc} from '@wangct/util';
-import DefineComponent from "../DefineComponent";
+import DefineComponent from "../frame/components/DefineComponent";
 
 /**
  * 异步视图（展示在界面时加载内容）

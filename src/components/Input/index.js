@@ -1,6 +1,6 @@
 import React from 'react';
 import {toStr} from "@wangct/util/lib/stringUtil";
-import DefineComponent from "../DefineComponent";
+import DefineComponent from "../frame/components/DefineComponent";
 import {callFunc} from "@wangct/util/lib/util";
 import {AntInput} from "../utils/baseCom";
 

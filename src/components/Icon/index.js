@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import {setCache,getCache} from '@wangct/util';
-import DefineComponent from "../DefineComponent";
+import DefineComponent from "../frame/components/DefineComponent";
 import {getIconScriptUrl} from "../utils/utils";
 import {AntIcon} from "../utils/baseCom";
 

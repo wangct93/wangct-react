@@ -1,7 +1,7 @@
 
 import React from 'react';
 import {toPromise, equal, getProps} from "@wangct/util";
-import DefineComponent from "../DefineComponent";
+import DefineComponent from "../frame/components/DefineComponent";
 import {toAry} from "@wangct/util/lib/arrayUtil";
 import {toStr} from "@wangct/util/lib/stringUtil";
 import {isUndef} from "@wangct/util/lib/typeUtil";

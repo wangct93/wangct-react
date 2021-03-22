@@ -1,7 +1,7 @@
 import React from 'react';
-import {getProps, callFunc, classNames} from "@wangct/util";
+import {getProps, classNames} from "@wangct/util";
 import './index.less';
-import DefineComponent from "../DefineComponent";
+import DefineComponent from "../frame/components/DefineComponent";
 import {toPromise} from "@wangct/util/lib/promiseUtil";
 import {AntModal} from "../utils/baseCom";
 

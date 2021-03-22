@@ -1,6 +1,6 @@
 import React from 'react';
 import {getProps, toPromise} from "@wangct/util";
-import DefineComponent from "../DefineComponent";
+import DefineComponent from "../frame/components/DefineComponent";
 import Auth from "../Auth";
 import {isObj, isStr} from "@wangct/util/lib/typeUtil";
 import {AntButton} from "../utils/baseCom";

@@ -1,7 +1,7 @@
 
 import React from 'react';
-import {toPromise, callFunc, equal, validateArray, getProps} from "@wangct/util";
-import DefineComponent from "../DefineComponent";
+import {toPromise, equal, validateArray, getProps} from "@wangct/util";
+import DefineComponent from "../frame/components/DefineComponent";
 import {getText, getValue} from "../utils/utils";
 import {AntRadio} from '../utils/baseCom';
 

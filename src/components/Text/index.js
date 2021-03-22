@@ -4,7 +4,7 @@
 import React from 'react';
 import Icon from '../Icon';
 import {classNames, getProps, isDef, isString,toAry} from "@wangct/util";
-import DefineComponent from "../DefineComponent";
+import DefineComponent from "../frame/components/DefineComponent";
 import {getText} from "../utils/utils";
 import {toPromise} from "@wangct/util/lib/promiseUtil";
 

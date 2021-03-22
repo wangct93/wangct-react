@@ -1,4 +1,4 @@
-import DefineComponent from "../DefineComponent";
+import DefineComponent from "../frame/components/DefineComponent";
 import {createPortal} from "react-dom";
 
 /**
@@ -38,6 +38,6 @@ export default class Portal extends DefineComponent {
 
   render() {
     const container = this.getProp('container');
-    return container && createPortal(this.props.children,container);
+    return container && createPortal(this.props.children,container) || null;
   }
 }

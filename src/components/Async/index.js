@@ -2,7 +2,7 @@
  * Created by wangct on 2019/2/1.
  */
 import React, {PureComponent} from 'react';
-import Loading from "../Loading";
+import Loading from "../frame/components/Loading";
 
 /**
  * 异步加载

@@ -1,7 +1,7 @@
 import React from 'react';
 import {callFunc} from "@wangct/util";
-import DefineComponent from "../DefineComponent";
-import {getResizeSign, reduxConnect} from "../../frame";
+import DefineComponent from "../frame/components/DefineComponent";
+import {getResizeSign, reduxConnect} from "../frame";
 
 /**
  * echart框架

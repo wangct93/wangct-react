@@ -3,7 +3,7 @@ import React, {PureComponent} from 'react';
 import {Form,Upload,Img,Icon,Text,Input} from '@lib';
 
 import './index.less';
-import {random} from "wangct-util";
+import {random} from "@wangct/util";
 import {Button } from "antd";
 import {DefineComponent, Swiper, Table} from "../../components";
 import TableView from "../../components/TableView";

@@ -1,7 +1,7 @@
 import React from "react";
 import {Divider, Icon} from "antd";
 import css from './index.less';
-import DefineComponent from "../DefineComponent";
+import DefineComponent from "../frame/components/DefineComponent";
 import Input from "../Input";
 import {toAry} from '@wangct/util';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { getProps} from "@wangct/util";
-import DefineComponent from "../DefineComponent";
+import DefineComponent from "../frame/components/DefineComponent";
 import {toAry} from "@wangct/util/lib/arrayUtil";
 import {toPromise} from "@wangct/util/lib/promiseUtil";
 import {toStr} from "@wangct/util/lib/stringUtil";

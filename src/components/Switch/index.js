@@ -1,5 +1,5 @@
 import React from 'react';
-import DefineComponent from "../DefineComponent";
+import DefineComponent from "../frame/components/DefineComponent";
 import {AntSwitch} from "../utils/baseCom";
 
 /**

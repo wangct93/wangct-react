@@ -1,29 +1,36 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import "./index.less";
-import {callFunc, classNames, getProps, isDef, isFunc, pathJoin, strEqual} from "@wangct/util";
-import DefineComponent from "../DefineComponent";
+import { classNames, isDef, isFunc, pathJoin} from "@wangct/util";
+import DefineComponent from "../frame/components/DefineComponent";
 import {AntTabs} from "../utils/baseCom";
+import {getPathname, pathTo, reduxConnect} from "../frame";
+import {toStr} from "@wangct/util/lib/stringUtil";
 
 /**
  * 封装tabs组件
  */
-@connect(({global}) => ({
-  pathname:global.pathname,
+@reduxConnect(() => ({
+  pathname:getPathname(),
 }))
 export default class Tabs extends DefineComponent{
 
   state = {
     options:[],
+    usePath:false,
+    fit:true,
     basePath:'/',
-    pathFormatter:this.pathFormatter.bind(this),
-    usePath:true,
-    value:this.getDefaultKey(),
-    fitHeight:true,
   };
 
-  pathFormatter(path){
-    return pathJoin(this.getProp('basePath'),path);
+  getBasePath(){
+    let {pathname,basePath} = this.props;
+    if(basePath){
+      return basePath;
+    }
+    this.getOptions().forEach((opt) => {
+      if(opt.path){
+        pathname = pathname.replace(new RegExp(opt.path + '$'),'');
+      }
+    });
+    return pathname || '/';
   }
 
   getActiveKey(){
@@ -34,17 +41,16 @@ export default class Tabs extends DefineComponent{
   getKeyByPath(pathname = this.props.pathname){
     const options = this.getOptions();
     const target = options.find((opt) => {
-      return matchPath(this.getPath(opt),pathname)
+      return pathMatch(this.getPath(opt),pathname)
     });
     return target && this.getKey(target);
   }
 
-  getPathByKey(key){
+  getOptByKey(key){
     const options = this.getOptions();
-    const target = options.find((opt) => {
-      return strEqual(this.getKey(opt),key);
+    return options.find((opt) => {
+      return this.getKey(opt) === key;
     });
-    return target && this.getPath(target);
   }
 
   getDefaultKey(){
@@ -54,12 +60,16 @@ export default class Tabs extends DefineComponent{
 
   getPath(opt){
     const pathFormatter = this.getProp('pathFormatter');
-    return pathFormatter ? pathFormatter(opt.path,opt) : opt.path;
+    return pathFormatter ? pathFormatter(opt.path,opt) : this.getOptPath(opt);
+  }
+
+  getOptPath(opt){
+    return pathJoin(this.getBasePath(),opt.path);
   }
 
   getKey(opt){
     const {keyFormatter} = this.props;
-    return keyFormatter ? keyFormatter(opt) : opt.title;
+    return keyFormatter ? keyFormatter(opt) : opt.key || opt.title;
   }
 
   isUsePath(){
@@ -68,13 +78,12 @@ export default class Tabs extends DefineComponent{
 
   tabChange = (key) => {
     if(this.isUsePath()){
-      const path = this.getPathByKey(key);
-      path && pathTo(path);
+      const target = this.getOptByKey();
+      if(target && target.path){
+        pathTo(target.path);
+      }
     }
-    this.setState({
-      value:key,
-    });
-    callFunc(this.props.onChange,key);
+    this.onChange(key);
   };
 
   render() {
@@ -84,21 +93,25 @@ export default class Tabs extends DefineComponent{
       {...props}
       activeKey={this.getActiveKey()}
       onChange={this.tabChange}
-      className={classNames('wct-tabs',props.className,this.getProp('fitHeight') && 'wct-tabs-fit-height')}
+      className={classNames('w-tabs',props.className,this.getProp('fit') && 'w-tabs-fit-height')}
     >
       {
         options.map((opt) => {
           const {component:Com,props:optProps = props.comProps} = opt;
           const comProps = isFunc(optProps) ? optProps(opt,options) : optProps;
-          return <Tabs.TabPane key={opt.title} tab={opt.title}>
+          return <AntTabs.TabPane key={this.getKey(opt)} tab={opt.title}>
             <Com {...comProps} />
-          </Tabs.TabPane>;
+          </AntTabs.TabPane>;
         })
       }
     </AntTabs>;
   }
 }
 
-function getKey(){
-
+/**
+ * 路径匹配
+ * @author wangchuitong
+ */
+export function pathMatch(targetPath, pathname) {
+  return pathname && targetPath && (toStr(pathname) + '/').startsWith(toStr(targetPath) + '/');
 }

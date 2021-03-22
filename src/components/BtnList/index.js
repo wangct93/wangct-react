@@ -1,4 +1,4 @@
-import DefineComponent from "../DefineComponent";
+import DefineComponent from "../frame/components/DefineComponent";
 import React from "react";
 import Btn from "../Btn";
 

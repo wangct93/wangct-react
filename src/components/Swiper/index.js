@@ -1,9 +1,10 @@
 import React, {PureComponent} from 'react';
 import {callFunc, classNames, getProps, toArray} from '@wangct/util';
-import './index.less';
 import Icon from "../Icon";
 
-
+/**
+ * 轮播图
+ */
 export default class Swiper extends PureComponent {
   state = {
     value:0,
@@ -133,10 +134,10 @@ export default class Swiper extends PureComponent {
 
   render() {
     const {state,props} = this;
-    return <div onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} className={classNames('wct-swiper',props.className)} style={props.style}>
+    return <div onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} className={classNames('w-swiper',props.className)} style={props.style}>
       <Icon type="left" onClick={this.toLeft} />
-      <div className="wct-swiper-view" ref={this.setElem}>
-        <div className="wct-swiper-content" style={{left:state.left}}>{this.getContent()}</div>
+      <div className="w-swiper-view" ref={this.setElem}>
+        <div className="w-swiper-content" style={{left:state.left}}>{this.getContent()}</div>
       </div>
       <Icon type="right" onClick={this.toRight} />
     </div>;

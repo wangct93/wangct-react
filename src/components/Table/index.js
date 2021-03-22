@@ -1,11 +1,10 @@
-import DefineComponent from "../DefineComponent";
+import DefineComponent from "../frame/components/DefineComponent";
 import React from "react";
 import {aryToObject, classNames, random, toAry, toNum, toStr} from "@wangct/util";
 import Form from "../Form";
 import BtnList from "../BtnList";
 import {isFunc, objFind, toPromise} from "@wangct/util";
-import {alertSucInfo,alertErrInfo} from "../../utils/frameUtil";
-import {getResizeSign, reduxConnect, showLoading} from "../../frame";
+import {getResizeSign, reduxConnect, showLoading,alertErrInfo,alertSucInfo} from "../frame";
 import Pagination from "../Pagination";
 
 const columns = [

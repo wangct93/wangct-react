@@ -1,0 +1,1 @@
+import global_14fjfy30v99 from '../../models/global.js'; export default [global_14fjfy30v99];

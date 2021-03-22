@@ -2,7 +2,7 @@
  * Created by wangct on 2019/1/19.
  */
 import React from 'react';
-import DefineComponent from "../DefineComponent";
+import DefineComponent from "../frame/components/DefineComponent";
 import Btn from "../Btn";
 
 /**

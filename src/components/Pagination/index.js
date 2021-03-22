@@ -1,7 +1,6 @@
 import React from 'react';
-import './index.less';
-import {callFunc, classNames, getProps, isDef} from '@wangct/util';
-import DefineComponent from "../DefineComponent";
+import {callFunc, classNames, getProps} from '@wangct/util';
+import DefineComponent from "../frame/components/DefineComponent";
 import {AntPagination} from "../utils/baseCom";
 
 /**

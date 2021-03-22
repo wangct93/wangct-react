@@ -1,4 +1,7 @@
-import {render} from 'wangct-react-entry';
-import "./styles/global.less";
+import {appStart} from "./components/frame";
+import {updateRoutes} from "./json/routes";
+import './styles/global.less';
 
-render();
+appStart().then(() => {
+  updateRoutes();
+});
