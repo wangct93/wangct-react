@@ -28,7 +28,8 @@ export class FlexItem extends DefineComponent {
 
   render() {
     const {props} = this;
-    return <div {...getDivProps(props)} className={classNames('w-flex-item',props.className)}>{props.children}</div>;
+    const Com = props.flex ? Flex : 'div';
+    return <Com {...getDivProps(props)} className={classNames('w-flex-item',props.className)}>{props.children}</Com>;
   }
 }
 

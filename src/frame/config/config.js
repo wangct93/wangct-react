@@ -1,1 +1,1 @@
-export default {"port":8088,"disableCssModules":true,"alisa":{"@lib":"F:\\workspace\\publish\\react\\src\\components"}}
+export default {"port":8088,"disableCssModules":["F:\\workspace\\publish\\react\\src\\components","F:\\workspace\\publish\\react\\src\\styles"],"alisa":{"@lib":"F:\\workspace\\publish\\react\\src\\components"}}

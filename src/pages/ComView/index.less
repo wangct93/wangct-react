@@ -1,0 +1,33 @@
+
+@import "../../styles/common";
+
+.menu_list{
+  border-right: 1px solid #e8e8e8;
+  width: 250px;
+
+  overflow: hidden;
+
+  &:hover{
+    overflow: auto;
+  }
+
+  .menu{
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    margin: 4px 0;
+    padding-left: 40px;
+    border-right: 2px solid transparent;
+
+    &:global(.active){
+      background-color: #e6f7ff;
+      color:@activeColor;
+      border-color:@activeColor;
+    }
+  }
+}
+
+.body{
+  padding-left: 64px;
+  padding-top: 20px;
+}

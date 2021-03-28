@@ -1,0 +1,68 @@
+@import "../../styles/common";
+
+@border:1px solid #ebedf0;
+
+.container{
+  position: relative;
+}
+
+.list{
+  padding-right: 170px;
+}
+
+.view_item{
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  margin: 0 0 16px;
+  border: @border;
+  border-radius: 2px;
+
+  .view{
+    padding: 42px 24px 50px;
+    color: rgba(0,0,0,.65);
+  }
+
+  .text_desc{
+    padding: 0 24px 12px;
+  }
+
+  .action_box{
+    border-top: @border;
+    padding: 10px;
+    .flex_center();
+  }
+
+  .code_box{
+    border-top: @border;
+    padding: 16px 32px;
+    white-space: pre-wrap;
+  }
+}
+
+.sider_box{
+  position: absolute;
+  width: 110px;
+  max-height: 100vh;
+  right: 20px;
+  top: 16px;
+  border-left: 1px solid #ebedf0;
+  line-height: 1.5;
+
+  &.sider_box_fixed{
+    top: 16px;
+  }
+
+  .sider_item{
+    margin-bottom: 4px;
+    padding-left: 16px;
+    margin-left: -1px;
+    border:1px solid transparent;
+    cursor: pointer;
+
+    &.active{
+      border-color:@activeColor;
+      color:@activeColor;
+    }
+  }
+}
