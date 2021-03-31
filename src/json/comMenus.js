@@ -1,18 +1,19 @@
 import {FieldsRoutePaths} from "./dic";
 import ComView from "../pages/ComView";
 import ComViewContent from "../pages/ComView/View";
-import {tableOptions} from "../pages/ComView/options";
+import {asyncVisualOptions, tableOptions} from "../pages/ComView/options";
 import React from "react";
 import {pathJoin} from "../frame";
 
 
 export default formatFullPath([
   {
-    title:'异步加载',
-    path:FieldsRoutePaths.async,
+    title:'可视区懒加载 AsyncVisual',
+    path:FieldsRoutePaths.asyncVisual,
+    component:() => <ComViewContent options={asyncVisualOptions} />
   },
   {
-    title:'表格',
+    title:'表格 Table',
     path:FieldsRoutePaths.table,
     component:() => <ComViewContent options={tableOptions} />
   }

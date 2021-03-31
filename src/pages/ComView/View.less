@@ -4,6 +4,7 @@
 
 .container{
   position: relative;
+  padding-bottom: 9999px;
 }
 
 .list{
@@ -49,6 +50,10 @@
   border-left: 1px solid #ebedf0;
   line-height: 1.5;
 
+  &.fixed{
+    position: fixed;
+  }
+
   &.sider_box_fixed{
     top: 16px;
   }
@@ -57,7 +62,7 @@
     margin-bottom: 4px;
     padding-left: 16px;
     margin-left: -1px;
-    border:1px solid transparent;
+    border-left:1px solid transparent;
     cursor: pointer;
 
     &.active{

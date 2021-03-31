@@ -27,6 +27,6 @@
   "devDependencies": {
     "@wangct/babel": "^1.0.1",
     "@wangct/node-util": "^1.0.4",
-    "@wangct/webpack": "^1.0.12"
+    "@wangct/webpack": "^1.0.13"
   }
 }

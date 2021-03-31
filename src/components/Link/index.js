@@ -41,6 +41,7 @@ export default class Link extends DefineComponent {
   }
 
   render() {
+    console.log(this.props.pathname);
     return <a className={classNames(this.getClassName(),'w-link')} onClick={this.onClick}>{this.props.children}</a>
   }
 }

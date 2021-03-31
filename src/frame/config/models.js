@@ -1,1 +1,1 @@
-import global_1in5mnv8cwo from '../../models/global.js'; export default [global_1in5mnv8cwo];
+import global_4pi21rtnkv from '../../models/global.js'; export default [global_4pi21rtnkv];

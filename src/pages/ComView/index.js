@@ -19,7 +19,7 @@ export default class ComView extends DefineComponent{
 
   getTarget(){
     const target = toAry(this.props.menus).find((item) => item.path === FieldsRoutePaths.component) || {};
-    return toAry(target.children).find((item) => pathMatch(item.fullPath,this.props.pathname));
+    return toAry(target.children).find((item) => pathMatch(item.fullPath,this.props.pathname)) || {};
   }
 
   render(){

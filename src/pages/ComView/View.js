@@ -3,6 +3,7 @@ import React from "react";
 import css from './View.less';
 import {Divider, Tooltip} from "antd";
 import Icon from "../../components/Icon";
+import {classNames} from "@wangct/util/lib/util";
 
 
 export default class ComViewContent extends DefineComponent {
@@ -74,6 +75,7 @@ class Sider extends DefineComponent {
   componentDidMount() {
     super.componentDidMount();
     this.addEvent();
+    this.updatePosStatus();
   }
 
   componentWillUnmount() {
@@ -89,18 +91,41 @@ class Sider extends DefineComponent {
   }
 
   scrollEvent = (e) => {
-    console.log(e);
+    const elem = this.props.contentElem;
+    if(!elem){
+      return;
+    }
+    const children = elem.children;
+    const index = Array.from(children).findIndex((el) => {
+      return el.getBoundingClientRect().bottom > 0;
+    });
+    const activeIndex = index === -1 ? children.length - 1 : index;
+    this.onChange(activeIndex);
+    this.updatePosStatus();
+
   };
 
-  selectIndex(){
+  updatePosStatus = () => {
+    const scrollTop = document.documentElement.scrollTop;
+    this.setState({
+      fixed:scrollTop > 105,
+    });
+  };
 
-  }
+  selectIndex = (index) => {
+    const elem = this.props.contentElem;
+    if(!elem){
+      return;
+    }
+    const dt = elem.children[index].getBoundingClientRect().top;
+    document.documentElement.scrollTop += dt - 20;
+  };
 
   render() {
-    return <div className={css.sider_box}>
+    return <div className={classNames(css.sider_box,this.state.fixed && css.fixed)}>
       {
         this.getOptions().map((opt,index) => {
-          return <div className={css.sider_item} key={index}>{opt.title}</div>
+          return <div onClick={this.selectIndex.bind(this,index)} className={classNames(css.sider_item,this.getValue() === index && css.active)} key={index}>{opt.title}</div>
         })
       }
     </div>

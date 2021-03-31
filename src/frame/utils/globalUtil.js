@@ -1,7 +1,6 @@
 
 const globalConfig = window.globalConfig || {};
 window.globalConfig = globalConfig;
-window.a = globalConfig
 
 /**
  * 获取全局配置
