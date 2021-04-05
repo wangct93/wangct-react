@@ -1,1 +1,1 @@
-import global_4pi21rtnkv from '../../models/global.js'; export default [global_4pi21rtnkv];
+import global_1b2apxbgrf from '../../models/global.js'; export default [global_1b2apxbgrf];

@@ -3,6 +3,7 @@ import React from "react";
 import Input from "../../components/Input";
 import AsyncVisual from "../../components/AsyncVisual";
 import {message} from 'antd';
+import {Upload} from "../../components";
 
 
 export const tableOptions = [
@@ -272,6 +273,30 @@ export const asyncVisualOptions = [
     desc:'当元素显示在可视区时加载',
     render:() => {
       return <AsyncVisual onShow={() => message.info('我在可视区了')} />
+    }
+  }
+];
+
+export const uploadOptions = [
+  {
+    title:'基本用法',
+    desc:'上传组件',
+    render:() => {
+      return <Upload onChange={(file) => message.success('收到文件，名称：' + file.name)} />
+    }
+  },
+  {
+    title:'显示文件列表',
+    desc:'上传组件',
+    render:() => {
+      return <Upload showList />
+    }
+  },
+  {
+    title:'显示文件列表 + 显示预览图',
+    desc:'上传组件',
+    render:() => {
+      return <Upload showList showPreview />
     }
   }
 ];

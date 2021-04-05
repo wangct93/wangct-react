@@ -125,7 +125,7 @@ class Sider extends DefineComponent {
     return <div className={classNames(css.sider_box,this.state.fixed && css.fixed)}>
       {
         this.getOptions().map((opt,index) => {
-          return <div onClick={this.selectIndex.bind(this,index)} className={classNames(css.sider_item,this.getValue() === index && css.active)} key={index}>{opt.title}</div>
+          return <div title={opt.title} onClick={this.selectIndex.bind(this,index)} className={classNames(css.sider_item,this.getValue() === index && css.active)} key={index}>{opt.title}</div>
         })
       }
     </div>
