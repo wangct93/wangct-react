@@ -9,7 +9,7 @@ async function start(){
   await updateComponent();
 
   babel({
-    src:'src/components',
+    src:'es',
     output:'lib',
   });
 }
@@ -19,7 +19,7 @@ async function updateComponent(){
   console.log('开始生成 components/index.js');
   const time = +new Date();
   const fs = require('fs');
-  const componentDir = 'src/components';
+  const componentDir = 'es';
   let list = fs.readdirSync(pathResolve(componentDir));
   list = list.filter(item => {
     const filePath = pathResolve(componentDir,item);
