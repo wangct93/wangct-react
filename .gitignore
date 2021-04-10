@@ -5,7 +5,7 @@
 /server/config/mysql.js
 /.idea
 /temp
-/lib
+#/lib
 
 
 # production

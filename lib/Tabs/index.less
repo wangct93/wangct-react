@@ -1,0 +1,16 @@
+@import "../styles/common";
+
+.w-tabs{
+
+  &.w-tabs-fit-height{
+    .flex_parent_column();
+    & > .ant-tabs-content{
+      .flex_child_column();
+    }
+  }
+
+  & > .ant-tabs-top-bar{
+    margin-bottom: 0;
+  }
+
+}

@@ -1,1 +1,1 @@
-import global_1b2apxbgrf from '../../models/global.js'; export default [global_1b2apxbgrf];
+import global_778og46g12 from '../../models/global.js'; export default [global_778og46g12];

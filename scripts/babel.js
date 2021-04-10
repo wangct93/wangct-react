@@ -1,11 +1,13 @@
 const babel = require('@wangct/babel');
 const {pathResolve} = require("@wangct/node-util/lib/path");
 const util = require('@wangct/node-util');
+const {spawn} = require("@wangct/node-util/lib/spawn");
 
 
 start();
 
 async function start(){
+  await spawn('dev',['frame','--output','es/frame']);
   await updateComponent();
 
   babel({
