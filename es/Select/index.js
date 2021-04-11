@@ -159,15 +159,17 @@ export class TreeSelect extends DefineComponent {
   }
 
   render() {
-    return <AntdTreeSelect
+    return <AntTreeSelect
       {...getProps(this)}
     >
       {
         this.getTreeNodes(this.getOptions())
       }
-    </AntdTreeSelect>;
+    </AntTreeSelect>;
   }
 }
+
+Select.Tree = TreeSelect;
 
 /**
  * 过滤树节点
