@@ -1,0 +1,30 @@
+@import "../styles/common";
+
+.w-flex{
+  .flex_parent();
+  align-content: flex-start;
+
+  &.w-flex-column{
+    .flex_parent_column();
+    & > .w-flex-item{
+      .flex_child_column();
+    }
+  }
+
+  & > .w-flex-item{
+    .flex_child();
+  }
+
+  &.w-flex-center{
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.w-flex-vertical-center{
+    align-items: center;
+  }
+
+  &.w-flex-wrap{
+    flex-wrap: wrap;
+  }
+}

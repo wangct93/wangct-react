@@ -1,0 +1,58 @@
+[2021-04-10T09:47:03.097] [INFO] default - 开始拷贝
+[2021-04-10T22:53:22.014] [INFO] default - 生成结束，目标地址： F:\workspace\publish\react\src\less\com.less
+[2021-04-10T22:53:22.276] [INFO] default - 生成文件： F:\workspace\publish\react\es\BtnList\index.less
+[2021-04-10T22:53:22.522] [INFO] default - 生成文件： F:\workspace\publish\react\es\Flex\index.less
+[2021-04-10T22:53:22.583] [INFO] default - 生成文件： F:\workspace\publish\react\es\Form\index.less
+[2021-04-10T22:53:23.598] [INFO] default - 生成文件： F:\workspace\publish\react\es\InputOption\index.less
+[2021-04-10T22:53:23.660] [INFO] default - 生成文件： F:\workspace\publish\react\es\Link\index.less
+[2021-04-10T22:53:23.736] [INFO] default - 生成文件： F:\workspace\publish\react\es\List\index.less
+[2021-04-10T22:53:23.798] [INFO] default - 生成文件： F:\workspace\publish\react\es\Modal\index.less
+[2021-04-10T22:53:23.859] [INFO] default - 生成文件： F:\workspace\publish\react\es\Pagination\index.less
+[2021-04-10T22:53:24.044] [INFO] default - 生成文件： F:\workspace\publish\react\es\styles\common.less
+[2021-04-10T22:53:24.105] [INFO] default - 生成文件： F:\workspace\publish\react\es\Swiper\index.less
+[2021-04-10T22:53:24.213] [INFO] default - 生成文件： F:\workspace\publish\react\es\Table\index.less
+[2021-04-10T22:53:24.275] [INFO] default - 生成文件： F:\workspace\publish\react\es\Tabs\index.less
+[2021-04-10T22:53:24.336] [INFO] default - 生成文件： F:\workspace\publish\react\es\Text\index.less
+[2021-04-10T22:53:24.398] [INFO] default - 生成文件： F:\workspace\publish\react\es\Tree\index.less
+[2021-04-10T22:53:24.459] [INFO] default - 生成文件： F:\workspace\publish\react\es\Upload\index.less
+[2021-04-10T22:53:24.554] [INFO] default - 生成结束，地址： F:\workspace\publish\react\src\less\com.less
+[2021-04-10T23:01:57.196] [INFO] default - 生成结束，目标地址： F:\workspace\publish\react\src\styles\com.less
+[2021-04-10T23:01:57.498] [INFO] default - 生成文件： F:\workspace\publish\react\es\BtnList\index.less
+[2021-04-10T23:01:57.729] [INFO] default - 生成文件： F:\workspace\publish\react\es\Flex\index.less
+[2021-04-10T23:01:57.791] [INFO] default - 生成文件： F:\workspace\publish\react\es\Form\index.less
+[2021-04-10T23:01:58.790] [INFO] default - 生成文件： F:\workspace\publish\react\es\InputOption\index.less
+[2021-04-10T23:01:58.836] [INFO] default - 生成文件： F:\workspace\publish\react\es\Link\index.less
+[2021-04-10T23:01:58.897] [INFO] default - 生成文件： F:\workspace\publish\react\es\List\index.less
+[2021-04-10T23:01:58.959] [INFO] default - 生成文件： F:\workspace\publish\react\es\Modal\index.less
+[2021-04-10T23:01:59.020] [INFO] default - 生成文件： F:\workspace\publish\react\es\Pagination\index.less
+[2021-04-10T23:01:59.190] [INFO] default - 生成文件： F:\workspace\publish\react\es\styles\common.less
+[2021-04-10T23:01:59.251] [INFO] default - 生成文件： F:\workspace\publish\react\es\Swiper\index.less
+[2021-04-10T23:01:59.358] [INFO] default - 生成文件： F:\workspace\publish\react\es\Table\index.less
+[2021-04-10T23:01:59.420] [INFO] default - 生成文件： F:\workspace\publish\react\es\Tabs\index.less
+[2021-04-10T23:01:59.481] [INFO] default - 生成文件： F:\workspace\publish\react\es\Text\index.less
+[2021-04-10T23:01:59.543] [INFO] default - 生成文件： F:\workspace\publish\react\es\Tree\index.less
+[2021-04-10T23:01:59.604] [INFO] default - 生成文件： F:\workspace\publish\react\es\Upload\index.less
+[2021-04-10T23:01:59.698] [INFO] default - 生成结束，地址： F:\workspace\publish\react\src\styles\com.less
+[2021-04-10T23:01:59.699] [INFO] default - 开始编译成css，地址： F:\workspace\publish\react\dist\react.css
+[2021-04-10T23:02:00.330] [ERROR] default - 错误码 1 null
+[2021-04-10T23:10:28.088] [INFO] default - 生成结束，目标地址： F:\workspace\publish\react\src\styles\com.less
+[2021-04-10T23:10:28.369] [INFO] default - 生成文件： F:\workspace\publish\react\es\BtnList\index.less
+[2021-04-10T23:10:28.599] [INFO] default - 生成文件： F:\workspace\publish\react\es\Flex\index.less
+[2021-04-10T23:10:28.661] [INFO] default - 生成文件： F:\workspace\publish\react\es\Form\index.less
+[2021-04-10T23:10:29.661] [INFO] default - 生成文件： F:\workspace\publish\react\es\InputOption\index.less
+[2021-04-10T23:10:29.723] [INFO] default - 生成文件： F:\workspace\publish\react\es\Link\index.less
+[2021-04-10T23:10:29.784] [INFO] default - 生成文件： F:\workspace\publish\react\es\List\index.less
+[2021-04-10T23:10:29.845] [INFO] default - 生成文件： F:\workspace\publish\react\es\Modal\index.less
+[2021-04-10T23:10:29.907] [INFO] default - 生成文件： F:\workspace\publish\react\es\Pagination\index.less
+[2021-04-10T23:10:30.091] [INFO] default - 生成文件： F:\workspace\publish\react\es\styles\common.less
+[2021-04-10T23:10:30.153] [INFO] default - 生成文件： F:\workspace\publish\react\es\Swiper\index.less
+[2021-04-10T23:10:30.261] [INFO] default - 生成文件： F:\workspace\publish\react\es\Table\index.less
+[2021-04-10T23:10:30.323] [INFO] default - 生成文件： F:\workspace\publish\react\es\Tabs\index.less
+[2021-04-10T23:10:30.384] [INFO] default - 生成文件： F:\workspace\publish\react\es\Text\index.less
+[2021-04-10T23:10:30.445] [INFO] default - 生成文件： F:\workspace\publish\react\es\Tree\index.less
+[2021-04-10T23:10:30.507] [INFO] default - 生成文件： F:\workspace\publish\react\es\Upload\index.less
+[2021-04-10T23:10:30.601] [INFO] default - 生成结束，地址： F:\workspace\publish\react\src\styles\com.less
+[2021-04-10T23:10:30.601] [INFO] default - 开始编译成css，地址： F:\workspace\publish\react\dist\react.css
+[2021-04-10T23:15:22.569] [INFO] default - 开始拷贝
+[2021-04-10T23:17:22.581] [INFO] default - 开始拷贝
+[2021-04-10T23:18:26.889] [INFO] default - 开始拷贝

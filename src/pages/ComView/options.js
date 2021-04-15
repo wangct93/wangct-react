@@ -1,9 +1,6 @@
-import Table, {TableSearch} from "../../components/Table";
 import React from "react";
-import Input from "../../components/Input";
-import AsyncVisual from "../../components/AsyncVisual";
 import {message} from 'antd';
-import {Upload} from "../../components";
+import {Table,AsyncVisual,Upload} from "@lib";
 
 
 export const tableOptions = [

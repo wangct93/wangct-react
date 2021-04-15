@@ -2,8 +2,8 @@ import DefineComponent from "../../frame/components/DefineComponent";
 import React from "react";
 import css from './View.less';
 import {Divider, Tooltip} from "antd";
-import Icon from "../../components/Icon";
 import {classNames} from "@wangct/util/lib/util";
+import Icon from "../../../es/Icon";
 
 
 export default class ComViewContent extends DefineComponent {

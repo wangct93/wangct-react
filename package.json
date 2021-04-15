@@ -1,10 +1,11 @@
 {
-  "name": "@wangct/react-lib",
+  "name": "@wangct/react",
   "version": "1.0.0",
   "description": "react组件库",
   "main": "lib/index.js",
   "files": [
-    "lib"
+    "lib",
+    "dist"
   ],
   "scripts": {
     "start": "dev",

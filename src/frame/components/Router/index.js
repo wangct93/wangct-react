@@ -9,6 +9,7 @@ import {getFragmentList, getRoutes, isTabRouter, reduxConnect, setRoutes} from "
 import {pathJoin} from "../../utils/path";
 import history from '../../modules/history';
 import Async from "../Async";
+import {pathTo} from "../..";
 
 /**
  * 路由组件
@@ -66,13 +67,14 @@ class Fragment extends PureComponent {
  * @param isTab
  * @returns {*}
  */
-export function getRoutesContent(routes,indexPath,isTab){
+export function getRoutesContent(routes,indexPath,isTab,rootPath = '/'){
   if(!routes){
     return;
   }
   if(isTab){
     return <TabRouter options={routes} />;
   }
+  console.log(indexPath,routes,1111);
   return <Switch>
     {
       routes.map((route) => {
@@ -90,7 +92,7 @@ export function getRoutesContent(routes,indexPath,isTab){
         props.render = props => {
           return <RouteComponent {...props} {...extProps} {...route.props}>
             {
-              children && children.length && getRoutesContent(children.map(childRoute => ({...childRoute,path:pathJoin(routePath,childRoute.path)})),indexPath && pathJoin(routePath,indexPath),route.isTab)
+              children && children.length && getRoutesContent(children.map(childRoute => ({...childRoute,path:pathJoin(routePath,childRoute.path)})),indexPath && pathJoin(routePath,indexPath),route.isTab,routePath)
             }
           </RouteComponent>
         };
@@ -98,7 +100,11 @@ export function getRoutesContent(routes,indexPath,isTab){
       })
     }
     {
-      indexPath ? <Route render={() => history.push(indexPath)} exact key="redirectRoute" path="/" /> : ''
+      indexPath ? <Route render={() => {
+        setTimeout(() => {
+          pathTo(indexPath);
+        },0)
+      }} exact key="redirectRoute" path={rootPath} /> : ''
     }
   </Switch>;
 }

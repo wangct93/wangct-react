@@ -5,6 +5,7 @@ import {toAry} from "@wangct/util/lib/arrayUtil";
 import {toPromise} from "@wangct/util/lib/promiseUtil";
 import {toStr} from "@wangct/util/lib/stringUtil";
 import {AntTree} from "../utils/baseCom";
+import {TreeSelect} from "../Select";
 
 
 /**
@@ -66,3 +67,5 @@ export default class Tree extends DefineComponent {
     </AntTree>;
   }
 }
+
+Tree.select = TreeSelect;

@@ -1,12 +1,12 @@
 
 import React from 'react';
-import {DefineComponent} from "../../components";
-import Flex, {FlexItem} from "../../components/Flex";
 import css from './index.less';
 import {getPathname, pathMatch, reduxConnect} from "../../frame";
 import {toAry} from "@wangct/util/lib/arrayUtil";
 import {FieldsRoutePaths} from "../../json/dic";
-import Link from "../../components/Link";
+import Flex, {FlexItem} from "../../../es/Flex";
+import Link from "../../../es/Link";
+import DefineComponent from "../../frame/components/DefineComponent";
 
 @reduxConnect(({global}) => ({
   menus:global.menus,

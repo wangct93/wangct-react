@@ -208,7 +208,9 @@ export default class Table extends DefineComponent {
         <div className="w-table-tr">
           {
             columns.map((col,index) => {
-              return <div style={this.getTdStyle(col,hasFitColumn)} className="w-table-td w-table-header-td" key={index}>{col.title}</div>;
+              return <div style={this.getTdStyle(col,hasFitColumn)} className="w-table-td w-table-header-td" key={index}>
+                <div className="w-table-td-content">{col.title}</div>
+              </div>;
             })
           }
         </div>
@@ -223,7 +225,11 @@ export default class Table extends DefineComponent {
                     const {render} = col;
                     let value = row[col.field];
                     value = render ? render(value,row,index) : value;
-                    return <div style={this.getTdStyle(col,hasFitColumn)} className="w-table-td" key={index}>{value}</div>;
+                    return <div style={this.getTdStyle(col,hasFitColumn)} className="w-table-td" key={index}>
+                      <div className="w-table-td-content">
+                        {value}
+                      </div>
+                    </div>;
                   })
                 }
               </div>
@@ -246,7 +252,11 @@ export default class Table extends DefineComponent {
         <div className="w-table-tr">
           {
             columns.map((col,index) => {
-              return <div style={this.getTdStyle(col,hasFitColumn)} className="w-table-td w-table-header-td" key={index}>{col.title}</div>;
+              return <div style={this.getTdStyle(col,hasFitColumn)} className="w-table-td w-table-header-td" key={index}>
+                <div className="w-table-td-content">
+                  {col.title}
+                </div>
+              </div>;
             })
           }
         </div>
@@ -261,7 +271,11 @@ export default class Table extends DefineComponent {
                     const {render} = col;
                     let value = row[col.field];
                     value = render ? render(value,row,index) : value;
-                    return <div style={this.getTdStyle(col,hasFitColumn)} className="w-table-td" key={index}>{value}</div>;
+                    return <div style={this.getTdStyle(col,hasFitColumn)} className="w-table-td" key={index}>
+                      <div className="w-table-td-content">
+                        {value}
+                      </div>
+                    </div>;
                   })
                 }
               </div>

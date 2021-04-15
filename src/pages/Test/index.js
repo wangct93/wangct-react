@@ -3,11 +3,10 @@ import React, {PureComponent, useContext, useEffect, useMemo, useRef, useState} 
 import {Form,Upload,Img,Icon,Text,Input} from '@lib';
 
 import './index.less';
-import {DefineComponent} from "../../components";
-import Tabs from "../../components/Tabs";
 import {random} from "@wangct/util/lib/util";
 import {reduxConnect, updateModel} from "../../frame";
 import {useSelector} from "react-redux";
+import DefineComponent from "../../frame/components/DefineComponent";
 
 const Context = React.createContext({name:'wangct'});
 
