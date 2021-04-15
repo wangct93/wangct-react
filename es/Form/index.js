@@ -37,11 +37,12 @@ export default class Form extends DefineComponent {
   };
 
   validator(value){
-    let options = this.getOptions();
+    let options = this.getShowOptions();
     if(value){
       options = options.filter((opt) => opt.field in value);
     }else{
       value = this.getValue();
+      value = aryToObject(options,(opt) => opt.field,(opt) => value[opt.field]);
     }
     const extError = validatorOptions(options,value);
     const error = objFilter({...this.state.error, ...extError,},value => !!value);
@@ -51,12 +52,20 @@ export default class Form extends DefineComponent {
     return Object.keys(error).length ? Promise.reject(error) : Promise.resolve(value);
   }
 
+  getShowOptions(){
+    const value = this.getValue();
+    return this.getShowOptions().filter((opt) => {
+      const {show} = opt;
+      return !show || show(value);
+    })
+  }
+
   render(){
     const value = this.getValue();
     const props = getProps(this);
     return <div className={classNames('w-form',props.className,!props.hasLabel && 'w-form-no-label')} style={props.style}>
       {
-        this.getOptions().map(opt => {
+        this.getShowOptions().map(opt => {
           const {field,readOnly = props.readOnly,disabled = readOnly,width = props.itemWidth} = opt;
           let {component:Com = 'div'} = opt;
           if(isStr(Com)){
