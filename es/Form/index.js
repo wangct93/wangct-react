@@ -16,6 +16,7 @@ export default class Form extends DefineComponent {
     value:this.props.defaultValue,
     itemWidth:'100%',
     hasLabel:true,
+    sep:'：',
   };
 
   getValue(){
@@ -66,14 +67,20 @@ export default class Form extends DefineComponent {
     return <div className={classNames('w-form',props.className,!props.hasLabel && 'w-form-no-label')} style={props.style}>
       {
         this.getShowOptions().map(opt => {
-          const {field,readOnly = props.readOnly,disabled = readOnly,width = props.itemWidth} = opt;
+          const {field,readOnly = props.readOnly,width = props.itemWidth,props:comProps = {},sep = props.sep} = opt;
           let {component:Com = 'div'} = opt;
           if(isStr(Com)){
             Com = getInputCom(Com) || 'div';
           }
+          const disabled = comProps.disabled || opt.disabled || readOnly;
+          const params = opt.parent ? aryToObject(toAry(opt.parent),(field) => field,(field) => value[field]) : null;
+          const comParams = comProps.params ? {
+            ...comProps.params,
+            ...params,
+          } : params;
           const {title} = opt;
-          return <FormItem className={opt.className} style={{width}} required={opt.required} title={title} key={field} error={this.state.error[field]}>
-            <Com readOnly={readOnly} disabled={disabled} title={title} value={value[field]} onChange={this.onFieldChange.bind(this,opt)} {...opt.props} />
+          return <FormItem sep={sep} className={opt.className} style={{width}} required={opt.required} title={title} key={field} error={this.state.error[field]}>
+            <Com readOnly={readOnly} disabled={disabled} title={title} value={value[field]} onChange={this.onFieldChange.bind(this,opt)} {...opt.props} params={comParams} />
           </FormItem>
         })
       }
@@ -93,7 +100,7 @@ export class FormItem extends PureComponent{
         {
           props.required && <span style={{color:'red'}}>*</span>
         }
-        <span>{props.title}{props.sep === false ? '' : props.sep || '：'}</span>
+        <span>{props.title}<span className="w-form-sep">{props.sep === false ? '' : props.sep || '：'}</span></span>
       </div>
       <div className="w-form-value">
         {props.children}
