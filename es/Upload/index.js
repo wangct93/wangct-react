@@ -10,6 +10,7 @@ import Flex, {FlexItem} from "../Flex";
 import Icon from "../Icon";
 import Img from "../Img";
 import {toStr} from "@wangct/util/lib/stringUtil";
+import {isStr} from "@wangct/util/lib/typeUtil";
 
 /**
  * 上传组件
@@ -60,7 +61,7 @@ export default class Upload extends DefineComponent {
       {
         this.getChildren()
       }
-      <input {...this.props} className={classNames(this.props.className,'w-upload-input')} multiple={this.isMultiple()} ref={this.setElem} type="file" onChange={this.inputChange} />
+      <input {...this.props} value={undefined} className={classNames(this.props.className,'w-upload-input')} multiple={this.isMultiple()} ref={this.setElem} type="file" onChange={this.inputChange} />
       {
         this.getProp('showList') && toAry(this.getValue()).map((file,index) => {
           return <Flex verticalCenter className="w-upload-item" key={index}>
@@ -80,7 +81,9 @@ export default class Upload extends DefineComponent {
 function ImgView(props){
   const [src,setSrc] = useState(null);
   useEffect(() => {
-    if(props.blob && isImgFileType(props.blob.type)){
+    if(isStr(props.blob)){
+      setSrc(props.blob);
+    }else if(props.blob && isImgFileType(props.blob.type)){
       const reader = new FileReader();
       reader.onload = (e) => {
         const base64 = e.target.result;

@@ -11,12 +11,13 @@ import {
   Switch,
   TreeSelect,
   Input,
-  Radio, Dropdown
+  Radio, Dropdown, Checkbox
 } from "antd";
 
 
 export const AntTree = Tree;
 export const AntSelect = Select;
+export const AntCheckbox = Checkbox;
 export const AntButton = Button;
 export const AntDatePicker = DatePicker;
 export const AntSpin = Spin;

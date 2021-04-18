@@ -55,7 +55,7 @@ export default class Form extends DefineComponent {
 
   getShowOptions(){
     const value = this.getValue();
-    return this.getShowOptions().filter((opt) => {
+    return this.getOptions().filter((opt) => {
       const {show} = opt;
       return !show || show(value);
     })

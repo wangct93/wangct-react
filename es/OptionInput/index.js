@@ -9,8 +9,10 @@ import {toAry} from '@wangct/util';
  * 字典选项配置输入组件
  * @author wangchuitong
  */
-export default class InputOption extends DefineComponent {
-  state = {};
+export default class OptionInput extends DefineComponent {
+  state = {
+    title:'选项',
+  };
 
   getValue(){
     return toAry(this.getProp('value'));
@@ -47,16 +49,16 @@ export default class InputOption extends DefineComponent {
   render() {
     const {props} = this;
     const {textInput:TextInput = Input,valueInput:ValueInput = Input} = props;
-    return <div className={css.container}>
-      <Divider >{props.title}</Divider>
-      <div className={css.list}>
+    return <div className="w-option-input">
+      <Divider>{this.getProp('title')}</Divider>
+      <div className="w-option-input-list">
         {
           this.getValue().map((item,index) => {
-            return <div key={index} className={css.item}>
-              <div className={css.item_input}>
+            return <div key={index} className="w-option-input-item">
+              <div className="w-option-input-target">
                 <TextInput title="键" value={item.text} onChange={this.textChange.bind(this,index)} />
               </div>
-              <div className={css.item_input}>
+              <div className="w-option-input-target">
                 <ValueInput title="值" parent={item.text} value={item.value} onChange={this.valueChange.bind(this,index,'value')} />
               </div>
               <Icon onClick={this.doRemove.bind(this,index)} type="minus-circle" />
@@ -64,8 +66,8 @@ export default class InputOption extends DefineComponent {
           })
         }
       </div>
-      <div className={css.add_box}>
-        <a onClick={this.doAdd} className={css.add_btn}>
+      <div className="w-option-input-btn-box">
+        <a onClick={this.doAdd} className="w-option-input-btn">
           <Icon type="plus-circle" />
           <span>添加选项</span>
         </a>

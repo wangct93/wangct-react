@@ -1,6 +1,7 @@
 import React from "react";
 import {message} from 'antd';
 import {Table,AsyncVisual,Upload} from "@lib";
+import OptionInput from "../../../es/OptionInput";
 
 
 export const tableOptions = [
@@ -297,3 +298,13 @@ export const uploadOptions = [
     }
   }
 ];
+
+export const optionInputOptions = [
+  {
+    title:'基本用法',
+    desc:'基本用法',
+    render:() => {
+      return <OptionInput />;
+    }
+  }
+]

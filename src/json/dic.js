@@ -13,10 +13,10 @@ export const FieldsRoutePaths = {
   form:'/form',
   icon:'/icon',
   img:'/img',
-  inputOption:'/inputOption',
   link:'/link',
   list:'/list',
   portal:'/portal',
   table:'/table',
   upload:'/upload',
+  optionInput:'/option-input',
 };

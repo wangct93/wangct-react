@@ -1,6 +1,6 @@
 {
   "name": "@wangct/react",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "react组件库",
   "main": "lib/index.js",
   "files": [
@@ -28,7 +28,7 @@
   "devDependencies": {
     "@wangct/babel": "^1.0.1",
     "@wangct/node-util": "^1.0.4",
-    "@wangct/webpack": "^1.0.13",
+    "@wangct/webpack": "^1.0.19",
     "echarts": "^5.0.2"
   }
 }

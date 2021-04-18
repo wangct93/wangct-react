@@ -9,7 +9,7 @@ import {getFragmentList, getRoutes, isTabRouter, reduxConnect, setRoutes} from "
 import {pathJoin} from "../../utils/path";
 import history from '../../modules/history';
 import Async from "../Async";
-import {pathTo} from "../..";
+import {pathTo} from "../../utils/path";
 
 /**
  * 路由组件
@@ -65,6 +65,7 @@ class Fragment extends PureComponent {
  * @param routes
  * @param indexPath
  * @param isTab
+ * @param rootPath
  * @returns {*}
  */
 export function getRoutesContent(routes,indexPath,isTab,rootPath = '/'){
@@ -74,7 +75,6 @@ export function getRoutesContent(routes,indexPath,isTab,rootPath = '/'){
   if(isTab){
     return <TabRouter options={routes} />;
   }
-  console.log(indexPath,routes,1111);
   return <Switch>
     {
       routes.map((route) => {
