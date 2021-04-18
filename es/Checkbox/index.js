@@ -21,6 +21,6 @@ export default class Checkbox extends DefineComponent {
   }
 
   render(){
-    return <AntCheckbox ref={this.setElem} {...this.getProps()} value={null} checked={this.getValue()} onChange={this.checkChange} />
+    return <AntCheckbox ref={this.setElem} {...this.getProps()} value={undefined} checked={this.getValue()} onChange={this.checkChange} />
   }
 }

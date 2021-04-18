@@ -78,9 +78,12 @@ export default class Form extends DefineComponent {
             ...comProps.params,
             ...params,
           } : params;
-          const {title} = opt;
+          const {title,formValue} = opt;
+          if(formValue){
+            comProps.formValue = value;
+          }
           return <FormItem sep={sep} className={opt.className} style={{width}} required={opt.required} title={title} key={field} error={this.state.error[field]}>
-            <Com readOnly={readOnly} disabled={disabled} title={title} value={value[field]} onChange={this.onFieldChange.bind(this,opt)} {...opt.props} params={comParams} />
+            <Com readOnly={readOnly} disabled={disabled} title={title} value={value[field]} onChange={this.onFieldChange.bind(this,opt)} {...comProps} params={comParams} />
           </FormItem>
         })
       }
