@@ -152,7 +152,7 @@ export class TreeSelect extends DefineComponent {
       }
       const text = textFormatter ? textFormatter(item[textField],item) : item[textField];
       const value = valueFormatter ? valueFormatter(item[valueField],item) : item[valueField];
-      return <AntTreeSelect.TreeNode title={text} key={value} value={value}>
+      return <AntTreeSelect.TreeNode data={item} title={text} key={value} value={value}>
         {this.getTreeNodes(item[childrenField])}
       </AntTreeSelect.TreeNode>;
     })
@@ -161,6 +161,7 @@ export class TreeSelect extends DefineComponent {
   render() {
     return <AntTreeSelect
       {...getProps(this)}
+      loadData={this.props.treeLoadData}
     >
       {
         this.getTreeNodes(this.getOptions())
