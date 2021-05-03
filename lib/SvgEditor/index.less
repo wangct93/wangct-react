@@ -1,0 +1,66 @@
+@import "../styles/common";
+
+.w-svg{
+  width: 100%;
+  height: 100%;
+}
+
+
+.w-svg-drag{
+  &:hover{
+    .w-svg-drag-content{
+      display: inline;
+    }
+  }
+
+  &.w-svg-drag-show{
+    .w-svg-drag-content{
+      display: inline;
+    }
+  }
+}
+
+.w-svg-drag-content{
+  display: none;
+}
+
+.w-svg-drag-line{
+  stroke: transparent;
+  fill: transparent;
+  &.w-svg-drag-line-left{
+    cursor: e-resize;
+  }
+  &.w-svg-drag-line-right{
+    cursor: e-resize;
+  }
+  &.w-svg-drag-line-top{
+    cursor: n-resize;
+  }
+  &.w-svg-drag-line-bottom{
+    cursor: n-resize;
+  }
+}
+
+.w-svg-drag-disabled{
+  .w-svg-drag-line,
+  .w-svg-drag-point{
+    cursor: auto !important;
+  }
+}
+
+.w-svg-drag-point{
+  stroke: transparent;
+  fill: transparent;
+  &.w-svg-drag-point-left-top{
+    cursor: nwse-resize;
+  }
+  &.w-svg-drag-point-left-bottom{
+    cursor: nesw-resize;
+  }
+  &.w-svg-drag-point-right-top{
+    cursor: nesw-resize;
+  }
+  &.w-svg-drag-point-right-bottom{
+    cursor: nwse-resize;
+  }
+}

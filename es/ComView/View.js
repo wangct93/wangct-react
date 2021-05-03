@@ -1,10 +1,8 @@
-import DefineComponent from "../../frame/components/DefineComponent";
 import React from "react";
-import css from './View.less';
 import {Divider, Tooltip} from "antd";
 import {classNames} from "@wangct/util/lib/util";
-import Icon from "../../../es/Icon";
-
+import DefineComponent from "../frame/components/DefineComponent";
+import Icon from "../Icon";
 
 export default class ComViewContent extends DefineComponent {
   state = {
@@ -12,9 +10,9 @@ export default class ComViewContent extends DefineComponent {
   };
 
   render() {
-    return <div className={css.container}>
-      <h2 className={css.title}>代码演示</h2>
-      <div ref={this.setStateElem} className={css.list}>
+    return <div className="w-com-view-content">
+      <h2 className="w-com-view-content-title">代码演示</h2>
+      <div ref={this.setStateElem} className="w-com-view-content-list">
         {
           this.getOptions().map((opt,index) => {
             return <ViewItem data={opt} key={index} />
@@ -39,13 +37,13 @@ class ViewItem extends DefineComponent {
 
   render() {
     const data = this.getData();
-    return <div className={css.view_item}>
-      <div className={css.view}>
+    return <div className="w-com-view-content-item">
+      <div className="w-com-view-content-item-view">
         {data.render && data.render()}
       </div>
       <Divider orientation="left">{data.title}</Divider>
-      <div className={css.text_desc}>{data.desc}</div>
-      <div className={css.action_box}>
+      <div className="w-com-view-content-item-desc">{data.desc}</div>
+      <div className="w-com-view-content-item-footer">
         {
           this.state.showCode ? <Tooltip title="收起代码">
             <Icon onClick={this.showCodeChange} type="shrink" />
@@ -55,7 +53,7 @@ class ViewItem extends DefineComponent {
         }
       </div>
       {
-        this.state.showCode && <div className={css.code_box}>
+        this.state.showCode && <div className="w-com-view-content-item-code">
           {
             data.code
           }
@@ -122,10 +120,12 @@ class Sider extends DefineComponent {
   };
 
   render() {
-    return <div className={classNames(css.sider_box,this.state.fixed && css.fixed)}>
+    return <div className={classNames('w-com-view-content-sider',this.state.fixed && 'w-com-view-content-sider-fixed')}>
       {
         this.getOptions().map((opt,index) => {
-          return <div title={opt.title} onClick={this.selectIndex.bind(this,index)} className={classNames(css.sider_item,this.getValue() === index && css.active)} key={index}>{opt.title}</div>
+          return <Tooltip title={opt.title} key={index}>
+            <div onClick={this.selectIndex.bind(this,index)} className={classNames('w-com-view-content-sider-item',this.getValue() === index && 'active')}>{opt.title}</div>
+          </Tooltip>
         })
       }
     </div>

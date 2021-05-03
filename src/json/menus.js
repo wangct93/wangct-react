@@ -1,7 +1,6 @@
 import {FieldsRoutePaths} from "./dic";
-import ComView from "../pages/ComView";
-import comMenus from "./comMenus";
 import Test from "../pages/Test";
+import ComView from "../../es/ComView";
 
 
 export default [
@@ -14,7 +13,5 @@ export default [
     title:'组件',
     path:FieldsRoutePaths.component,
     component:ComView,
-    children:comMenus,
-    indexPath:comMenus[0].path,
   },
 ]

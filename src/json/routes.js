@@ -7,7 +7,6 @@ import Layout from "../pages/Layout";
 
 export function updateRoutes(){
   const newMenus = menus.slice(0);
-  console.log(newMenus);
   setRoutes([
     {
       path:'/',

@@ -11,6 +11,7 @@ import Icon from "../Icon";
 import Img from "../Img";
 import {toStr} from "@wangct/util/lib/stringUtil";
 import {isStr} from "@wangct/util/lib/typeUtil";
+import {getDivProps} from "../utils/utils";
 
 /**
  * 上传组件
@@ -61,7 +62,7 @@ export default class Upload extends DefineComponent {
       {
         this.getChildren()
       }
-      <input {...this.props} value={undefined} className={classNames(this.props.className,'w-upload-input')} multiple={this.isMultiple()} ref={this.setElem} type="file" onChange={this.inputChange} />
+      <input {...getDivProps(this.props)} value={undefined} className={classNames(this.props.className,'w-upload-input')} multiple={this.isMultiple()} ref={this.setElem} type="file" onChange={this.inputChange} />
       {
         this.getProp('showList') && toAry(this.getValue()).map((file,index) => {
           return <Flex verticalCenter className="w-upload-item" key={index}>

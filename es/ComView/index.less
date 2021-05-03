@@ -1,17 +1,50 @@
-@import "../../styles/common";
 
+@import "../styles/common";
 @border:1px solid #ebedf0;
 
-.container{
+.w-com-view-left{
+  border-right: 1px solid #e8e8e8;
+  width: 250px;
+
+  overflow: hidden;
+
+  &:hover{
+    overflow: auto;
+  }
+
+  .w-com-view-nav{
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    margin: 4px 0;
+    padding-left: 40px;
+    border-right: 2px solid transparent;
+
+    &.active{
+      background-color: #e6f7ff;
+      color:@activeColor;
+      border-color:@activeColor;
+    }
+  }
+}
+
+.w-com-view-body{
+  padding-left: 64px;
+  padding-top: 20px;
+}
+
+
+
+.w-com-view-content{
   position: relative;
   padding-bottom: 9999px;
 }
 
-.list{
+.w-com-view-content-list{
   padding-right: 170px;
 }
 
-.view_item{
+.w-com-view-content-item{
   position: relative;
   display: inline-block;
   width: 100%;
@@ -19,29 +52,29 @@
   border: @border;
   border-radius: 2px;
 
-  .view{
+  .w-com-view-content-item-view{
     padding: 42px 24px 50px;
     color: rgba(0,0,0,.65);
   }
 
-  .text_desc{
+  .w-com-view-content-item-desc{
     padding: 0 24px 12px;
   }
 
-  .action_box{
+  .w-com-view-content-item-footer{
     border-top: @border;
     padding: 10px;
     .flex_center();
   }
 
-  .code_box{
+  .w-com-view-content-item-code{
     border-top: @border;
     padding: 16px 32px;
     white-space: pre-wrap;
   }
 }
 
-.sider_box{
+.w-com-view-content-sider{
   position: absolute;
   width: 110px;
   max-height: 100vh;
@@ -50,15 +83,11 @@
   border-left: 1px solid #ebedf0;
   line-height: 1.5;
 
-  &.fixed{
+  &.w-com-view-content-sider-fixed{
     position: fixed;
   }
 
-  &.sider_box_fixed{
-    top: 16px;
-  }
-
-  .sider_item{
+  .w-com-view-content-sider-item{
     margin-bottom: 4px;
     padding-left: 16px;
     margin-left: -1px;

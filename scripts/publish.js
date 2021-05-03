@@ -8,6 +8,7 @@ start();
  * @author wangchuitong
  */
 async function start(){
+  await spawn('npm',['run','css']);
   await spawn('npm',['run','babel']);
   await spawn('npm',['pu','--registry','https://registry.npmjs.org/','--access=public']).then(() => {
     console.log('发布成功');

@@ -6,7 +6,6 @@ import {toAry} from "@wangct/util/lib/arrayUtil";
 import {Link,Flex} from "@lib";
 import DefineComponent from "../../frame/components/DefineComponent";
 import {FlexItem} from "../../../es/Flex";
-console.log(Flex,Link);
 
 
 export default class Layout extends DefineComponent{
