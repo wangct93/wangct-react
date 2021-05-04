@@ -1,1 +1,1 @@
-import global_kxseghob9r from '../../models/global.js'; export default [global_kxseghob9r];
+import global_25cm5l07t0 from '../../models/global.js'; export default [global_25cm5l07t0];

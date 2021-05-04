@@ -1,4 +1,11 @@
-import {asyncVisualOptions, optionInputOptions, svgEditorOptions, tableOptions, uploadOptions} from "./options";
+import {
+  asyncVisualOptions,
+  optionInputOptions,
+  selectOptions,
+  svgEditorOptions,
+  tableOptions,
+  uploadOptions
+} from "./options";
 import {FieldsRoutePaths} from "./dic";
 
 
@@ -27,5 +34,10 @@ export default [
     title:'矢量图编辑器 SvgEditor',
     path:FieldsRoutePaths.svgEditor,
     options:svgEditorOptions,
+  },
+  {
+    title:'下拉框 Select',
+    path:FieldsRoutePaths.select,
+    options:selectOptions,
   }
 ];

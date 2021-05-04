@@ -1,0 +1,437 @@
+.w-btn-list {
+  display: flex;
+  flex-direction: row;
+}
+.w-btn-list .ant-btn:not(:first-child) {
+  margin-left: 10px;
+}
+.w-com-view-left {
+  border-right: 1px solid #e8e8e8;
+  width: 250px;
+  overflow: hidden;
+}
+.w-com-view-left:hover {
+  overflow: auto;
+}
+.w-com-view-left .w-com-view-nav {
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  margin: 4px 0;
+  padding-left: 40px;
+  border-right: 2px solid transparent;
+}
+.w-com-view-left .w-com-view-nav.active {
+  background-color: #e6f7ff;
+  color: #1890ff;
+  border-color: #1890ff;
+}
+.w-com-view-body {
+  padding-left: 64px;
+  padding-top: 20px;
+}
+.w-com-view-content {
+  position: relative;
+  padding-bottom: 9999px;
+}
+.w-com-view-content-list {
+  padding-right: 170px;
+}
+.w-com-view-content-item {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  margin: 0 0 16px;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+}
+.w-com-view-content-item .w-com-view-content-item-view {
+  padding: 42px 24px 50px;
+  color: rgba(0, 0, 0, 0.65);
+}
+.w-com-view-content-item .w-com-view-content-item-desc {
+  padding: 0 24px 12px;
+}
+.w-com-view-content-item .w-com-view-content-item-footer {
+  border-top: 1px solid #ddd;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.w-com-view-content-item .w-com-view-content-item-code {
+  border-top: 1px solid #ddd;
+  padding: 16px 32px;
+  white-space: pre-wrap;
+}
+.w-com-view-content-sider {
+  position: absolute;
+  width: 110px;
+  max-height: 100vh;
+  right: 20px;
+  top: 16px;
+  border-left: 1px solid #ebedf0;
+  line-height: 1.5;
+}
+.w-com-view-content-sider.w-com-view-content-sider-fixed {
+  position: fixed;
+}
+.w-com-view-content-sider .w-com-view-content-sider-item {
+  margin-bottom: 4px;
+  padding-left: 16px;
+  margin-left: -1px;
+  border-left: 1px solid transparent;
+  cursor: pointer;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.w-com-view-content-sider .w-com-view-content-sider-item.active {
+  border-color: #1890ff;
+  color: #1890ff;
+}
+.w-flex {
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+}
+.w-flex.w-flex-column {
+  display: flex;
+  flex-direction: row;
+  flex-direction: column;
+  height: 100%;
+}
+.w-flex.w-flex-column > .w-flex-item {
+  flex: 1;
+  width: 0;
+  height: 0;
+  width: auto;
+}
+.w-flex > .w-flex-item {
+  flex: 1;
+  width: 0;
+}
+.w-flex.w-flex-center {
+  align-items: center;
+  justify-content: center;
+}
+.w-flex.w-flex-vertical-center {
+  align-items: center;
+}
+.w-flex.w-flex-wrap {
+  flex-wrap: wrap;
+}
+.w-form {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: -10px;
+  flex-wrap: wrap;
+}
+.w-form .w-form-line {
+  flex: 0 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  line-height: 32px;
+  margin-bottom: 10px;
+}
+.w-form .w-form-label {
+  width: 80px;
+  text-align: right;
+}
+.w-form .w-form-value {
+  flex: 1;
+  width: 0;
+}
+.w-form .ant-input-number,
+.w-form .ant-select,
+.w-form .ant-input,
+.w-form .ant-calendar-picker {
+  width: 100%;
+}
+.w-form-no-label .w-form-label {
+  display: none;
+}
+.w-link {
+  color: inherit;
+}
+.w-list-alert {
+  text-align: center;
+  padding: 10px;
+  width: 100%;
+}
+.w-modal .ant-modal-body {
+  padding: 0;
+  overflow: auto;
+}
+.w-option-input-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.w-option-input-item .anticon-minus-circle {
+  font-size: 16px;
+  color: red;
+}
+.w-option-input-target {
+  flex: 1;
+  width: 0;
+  margin-right: 10px;
+}
+.w-option-input-btn .anticon {
+  margin-right: 5px;
+}
+.w-pagination {
+  text-align: right;
+  padding: 10px;
+}
+.w-svg {
+  width: 100%;
+  height: 100%;
+}
+.w-svg-drag:hover .w-svg-drag-content {
+  display: inline;
+}
+.w-svg-drag.w-svg-drag-show .w-svg-drag-content {
+  display: inline;
+}
+.w-svg-drag-content {
+  display: none;
+}
+.w-svg-drag-line {
+  stroke: transparent;
+  fill: transparent;
+}
+.w-svg-drag-line.w-svg-drag-line-left {
+  cursor: e-resize;
+}
+.w-svg-drag-line.w-svg-drag-line-right {
+  cursor: e-resize;
+}
+.w-svg-drag-line.w-svg-drag-line-top {
+  cursor: n-resize;
+}
+.w-svg-drag-line.w-svg-drag-line-bottom {
+  cursor: n-resize;
+}
+.w-svg-drag-disabled .w-svg-drag-line,
+.w-svg-drag-disabled .w-svg-drag-point {
+  cursor: auto !important;
+}
+.w-svg-drag-point {
+  stroke: transparent;
+  fill: transparent;
+}
+.w-svg-drag-point.w-svg-drag-point-left-top {
+  cursor: nwse-resize;
+}
+.w-svg-drag-point.w-svg-drag-point-left-bottom {
+  cursor: nesw-resize;
+}
+.w-svg-drag-point.w-svg-drag-point-right-top {
+  cursor: nesw-resize;
+}
+.w-svg-drag-point.w-svg-drag-point-right-bottom {
+  cursor: nwse-resize;
+}
+.w-swiper {
+  display: flex;
+  align-items: center;
+}
+.w-swiper > .anticon-left,
+.w-swiper > .anticon-right {
+  font-size: 22px;
+  color: #999;
+  cursor: pointer;
+}
+.w-swiper-view {
+  margin: 0 20px;
+  overflow: hidden;
+  flex: 1;
+  white-space: nowrap;
+}
+.w-swiper-content {
+  position: relative;
+  left: 0;
+  top: 0;
+}
+.w-swiper-content > div,
+.w-swiper-content > span {
+  display: inline-block;
+  vertical-align: middle;
+  width: 100%;
+  text-align: center;
+}
+.w-table {
+  position: relative;
+}
+.w-table-header {
+  background-color: #eee;
+}
+.w-table-header .w-table-tr {
+  overflow: hidden;
+}
+.w-table-body {
+  overflow: auto;
+}
+.w-table-body .w-table-tr:nth-child(even),
+.w-table-body .w-table-tr:hover {
+  background-color: #fafafa;
+}
+.w-table-tr {
+  display: flex;
+  flex-direction: row;
+}
+.w-table-td {
+  flex: 1;
+  width: 0;
+  padding: 0 10px;
+  min-height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.w-table-fit {
+  display: flex;
+  flex-direction: row;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  min-height: 200px;
+}
+.w-table-fit .w-table-body {
+  flex: 1;
+  width: 0;
+  height: 0;
+  width: auto;
+  overflow: auto;
+}
+.w-table-search > .w-header {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+.w-table-search > .w-header .w-form {
+  flex: 1;
+  width: 0;
+  padding-right: 10px;
+}
+.w-table-search > .w-footer .ant-pagination {
+  text-align: right;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+.w-table-search.w-table-search-fit {
+  display: flex;
+  flex-direction: row;
+  flex-direction: column;
+  height: 100%;
+}
+.w-table-search.w-table-search-fit > .w-body {
+  flex: 1;
+  width: 0;
+  height: 0;
+  width: auto;
+}
+.w-table-fixed {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.w-table-fixed .w-table-fixed-left,
+.w-table-fixed .w-table-fixed-right {
+  left: 0;
+  top: 0;
+  position: absolute;
+  overflow: hidden;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: row;
+  flex-direction: column;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: 6px 0 6px -4px rgba(0, 0, 0, 0.15);
+}
+.w-table-fixed .w-table-fixed-right {
+  left: auto;
+  right: 0;
+  box-shadow: -6px 0 6px -4px rgba(0, 0, 0, 0.15);
+}
+.w-table-fixed .w-table-body {
+  overflow: hidden;
+}
+.w-table-scroll-y .w-table-header {
+  padding-right: 17px;
+}
+.w-table-scroll-y .w-table-fixed .w-table-header {
+  padding-right: 0;
+}
+.w-table-scroll-y .w-table-fixed-right {
+  right: 17px;
+}
+.w-table-scroll-x .w-table-fixed {
+  padding-bottom: 17px;
+}
+.w-table-scroll-x .w-table-fixed-left,
+.w-table-scroll-x .w-table-fixed-right {
+  height: calc(100% - 17px);
+}
+.w-table-fixed-scroll-left-min .w-table-fixed-left {
+  box-shadow: none;
+}
+.w-table-fixed-scroll-left-max .w-table-fixed-right {
+  box-shadow: none;
+}
+.w-table-td-content {
+  white-space: normal;
+  width: 100%;
+}
+.w-tabs.w-tabs-fit-height {
+  display: flex;
+  flex-direction: row;
+  flex-direction: column;
+  height: 100%;
+}
+.w-tabs.w-tabs-fit-height > .ant-tabs-content {
+  flex: 1;
+  width: 0;
+  height: 0;
+  width: auto;
+}
+.w-tabs > .ant-tabs-top-bar {
+  margin-bottom: 0;
+}
+.wct-text > .anticon {
+  margin-right: 5px;
+}
+.topology_box {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.topology_box .topology_content {
+  flex: 1;
+  overflow: auto;
+}
+.topology_box .topology_select {
+  padding: 10px 10px 0 10px;
+}
+.topology_box .topology_select :global .ant-select {
+  width: 100%;
+}
+.w-upload-input {
+  display: none;
+}
+.w-upload-item {
+  padding: 10px;
+}
+.w-upload-item-img {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}

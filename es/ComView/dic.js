@@ -21,4 +21,5 @@ export const FieldsRoutePaths = {
   upload:'/upload',
   optionInput:'/option-input',
   svgEditor:'/svgEditor',
+  select:'/select'
 };

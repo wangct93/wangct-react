@@ -7,6 +7,7 @@ import Upload from "../Upload";
 import OptionInput from "../OptionInput";
 import SvgEditor from "../SvgEditor";
 import SvgDemo from '../assets/images/svg_demo.jpg';
+import Select from "../Select";
 
 
 export const tableOptions = [
@@ -497,5 +498,44 @@ export const svgEditorOptions = [
       '        }\n' +
       '      ];\n' +
       '      return <SvgEditor value={nodes} height={500} />;'
+  }
+];
+
+export const selectOptions = [
+  {
+    title:'基本用法',
+    desc:'基本用法',
+    render:() => {
+      const options = [
+        {
+          text:'Jack',
+          value:'Jack',
+        },
+        {
+          text:'Lucy',
+          value:'Lucy',
+        },
+        {
+          text:'yiminghe',
+          value:'yiminghe',
+        }
+      ];
+      return <Select options={options} initValue />;
+    },
+    code:'const options = [\n' +
+      '        {\n' +
+      '          text:\'Jack\',\n' +
+      '          value:\'Jack\',\n' +
+      '        },\n' +
+      '        {\n' +
+      '          text:\'Lucy\',\n' +
+      '          value:\'Lucy\',\n' +
+      '        },\n' +
+      '        {\n' +
+      '          text:\'yiminghe\',\n' +
+      '          value:\'yiminghe\',\n' +
+      '        }\n' +
+      '      ];\n' +
+      '      return <Select options={options} initValue />;',
   }
 ];

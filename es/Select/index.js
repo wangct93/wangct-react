@@ -23,7 +23,15 @@ export default class Select extends DefineComponent {
 
   componentDidMount() {
     this.initValue();
-    this.loadOptions();
+  }
+
+  initValue() {
+    super.initValue();
+    if(this.props.options){
+      this.initValueByOptions();
+    }else{
+      this.loadOptions();
+    }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -50,16 +58,20 @@ export default class Select extends DefineComponent {
       this.setState({
         options,
       });
-      if(!this.getValue() && this.getProp('initValue') && options.length){
-        const data = options[0];
-        const key = data.value;
-        if(this.isMultiple()){
-          this.onChange([key],[data]);
-        }else{
-          this.onChange(key,data);
-        }
-      }
+      this.initValueByOptions(options);
     });
+  }
+
+  initValueByOptions(options = this.getOptions()){
+    if(this.getValue() == null && this.getProp('initValue') && options.length){
+      const data = options[0];
+      const key = data.value;
+      if(this.isMultiple()){
+        this.onChange([key],[data]);
+      }else{
+        this.onChange(key,data);
+      }
+    }
   }
 
   getValue() {
@@ -134,8 +146,9 @@ export class TreeSelect extends DefineComponent {
 
   initOptions(){
     toPromise(this.props.loadData).then((options) => {
+      options = toAry(options);
       this.setState({
-        options:toAry(options),
+        options,
       });
     });
   }
@@ -162,6 +175,7 @@ export class TreeSelect extends DefineComponent {
     return <AntTreeSelect
       {...getProps(this)}
       loadData={this.props.treeLoadData}
+      className={classNames('w-select',this.getProp('className'))}
     >
       {
         this.getTreeNodes(this.getOptions())
